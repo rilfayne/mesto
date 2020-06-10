@@ -4,6 +4,10 @@
   background: url(../../../images/add\ button.svg);
 }
 
+.profile__add-button:hover {
+  opacity: .6;
+}
+
 @media screen and (max-width: 700px) {
   .profile__add-button {
     background: url(../../../images/add\ button2.svg);
