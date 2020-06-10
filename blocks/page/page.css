@@ -2,5 +2,7 @@
   background: black;
   min-width: 300px;
   font-family: 'Inter', 'Arial', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-weight: normal;
 }
