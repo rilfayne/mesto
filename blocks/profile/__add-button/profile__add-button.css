@@ -1,5 +1,5 @@
 .profile__add-button {
-  padding: 0;
+  padding: 25px 75px;
   border: none;
-  background: none;
+  background: url(../../../images/add\ button.svg);
 }
