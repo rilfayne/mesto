@@ -5,3 +5,10 @@
   max-width: 336px;
   align-content: center;
 }
+
+@media screen and (max-width: 450px) {
+  .profile__info {
+    margin: 14px 0 0;
+    justify-content: center;
+  }
+}
