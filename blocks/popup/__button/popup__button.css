@@ -1,0 +1,11 @@
+.popup__button {
+  background-color: black;
+  color: white;
+  height: 51px;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  border-radius: 2px;
+  border: none;
+  padding: 0;
+}
