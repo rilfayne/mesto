@@ -3,6 +3,8 @@
   top: -47px;
   right: -47px;
   width: 58px;
+  box-shadow: none;
+  cursor: pointer;
 }
 
 .popup__close:hover {

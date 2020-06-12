@@ -8,6 +8,8 @@
   border-radius: 2px;
   border: none;
   padding: 0;
+  box-shadow: none;
+  cursor: pointer;
 }
 
 .popup__button:hover {

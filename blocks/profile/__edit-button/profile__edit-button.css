@@ -6,6 +6,8 @@
   background-size: cover;
   margin-left: 17px;
   align-self: flex-end;
+  box-shadow: none;
+  cursor: pointer;
 }
 
 .profile__edit-button:hover {

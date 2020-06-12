@@ -2,6 +2,8 @@
   padding: 25px 75px;
   border: none;
   background: url(../../../images/add\ button.svg);
+  box-shadow: none;
+  cursor: pointer;
 }
 
 .profile__add-button:hover {
