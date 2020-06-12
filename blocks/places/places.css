@@ -1,9 +1,7 @@
+@import url(./__list/places__list.css);
+
 .places {
   padding-top: 50px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 282px);
-  row-gap: 20px;
-  column-gap: 18px;
   width: 100%;
 }
 
