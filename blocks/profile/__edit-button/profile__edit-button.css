@@ -1,16 +1,12 @@
 .profile__edit-button {
   padding: 12px 12px;
   border: none;
-  background: url(../../../images/edit\ button.svg);
+  background: url(../../../images/edit_button.svg);
   background-position: center;
   background-size: cover;
-  margin: 0;
+  margin-left: 21px;
   box-shadow: none;
   cursor: pointer;
-  position: absolute;
-  right: -45px;
-  top: 37px;
-
 }
 
 .profile__edit-button:hover {
@@ -22,5 +18,6 @@
     padding: 9px 9px;
     right: 31px;
     top: 19px;
+    margin-left: 8px;
   }
 }

@@ -3,8 +3,7 @@
 .header {
   width: 100%;
   padding-top: 45px;
-  border-bottom: 1px solid #545454;
-  max-height: 74px;
+  border-bottom: 1px solid rgba(84,84,84, .7);
   max-width: 882px;
   margin: 0 auto;
 }
@@ -12,6 +11,5 @@
 @media screen and (max-width: 881px) {
   .header {
     padding-top: 28px;
-    max-height: 56px;
   }
 }

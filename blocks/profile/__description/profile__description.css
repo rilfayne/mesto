@@ -1,5 +1,5 @@
 .profile__description {
-  margin: 7px 0 0;
+  margin: 5px 0 0;
   color: white;
   font-size: 18px;
   line-height: 22px;
@@ -13,8 +13,7 @@
   .profile__description {
     font-size: 14px;
     line-height: 17px;
-    margin: 8px 0 34px;
-    max-height: 16px;
+    margin: 0 0 33px;
     text-align: center;
     width: 100%;
   }

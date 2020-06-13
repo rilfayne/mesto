@@ -10,8 +10,9 @@
   padding: 0;
   box-shadow: none;
   cursor: pointer;
+  transition: background-color .3s linear;
 }
 
 .popup__button:hover {
-  opacity: .8;
+  background-color: rgba(0, 0, 0, 0.8);
 }

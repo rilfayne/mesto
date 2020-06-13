@@ -5,6 +5,9 @@
   width: 58px;
   box-shadow: none;
   cursor: pointer;
+  background: url(../../../images/close.svg);
+  padding: 29px 29px;
+  border: none;
 }
 
 .popup__close:hover {
