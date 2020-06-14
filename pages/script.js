@@ -32,7 +32,7 @@ const formSubmitHandler = function(event) {
   nameProfile.textContent = nameInput.value;
   descriptionProfile.textContent = descriptionInput.value;
 
-  popupToggle() // закрываем окно
+  popupToggle(event) // закрываем окно
 }
 
 editButton.addEventListener('click', popupToggle)
