@@ -12,8 +12,10 @@ let descriptionProfile = document.querySelector('.profile__description')
 const popupToggle = function(event) {
   popup.classList.toggle('popup_opened') // добавляем или убираем класс попапу
 
+  if (event.target === editButton) {
   nameInput.value = nameProfile.textContent; // заполняем графу name
   descriptionInput.value = descriptionProfile.textContent; // заполняем графу description
+  }
 }
 
 // закрытие попапа по клику на полупрозрачный фон
@@ -21,10 +23,6 @@ const closePopup = function(event) {
   if (event.target !== event.currentTarget) { return } 
   popupToggle()
 }
-
-editButton.addEventListener('click', popupToggle)
-closeButton.addEventListener('click', popupToggle)
-popup.addEventListener('click', closePopup)
 
 // Изменение данных профиля
 
@@ -37,4 +35,7 @@ const formSubmitHandler = function(event) {
   popupToggle() // закрываем окно
 }
 
+editButton.addEventListener('click', popupToggle)
+closeButton.addEventListener('click', popupToggle)
+popup.addEventListener('click', closePopup)
 form.addEventListener('submit', formSubmitHandler)
