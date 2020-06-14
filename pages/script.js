@@ -21,7 +21,7 @@ const popupToggle = function(event) {
 // закрытие попапа по клику на полупрозрачный фон
 const closePopup = function(event) {
   if (event.target !== event.currentTarget) { return } 
-  popupToggle()
+  popupToggle(event)
 }
 
 // Изменение данных профиля
