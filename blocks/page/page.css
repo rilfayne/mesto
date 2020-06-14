@@ -5,4 +5,5 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: normal;
+  min-height: 100vh;
 }
