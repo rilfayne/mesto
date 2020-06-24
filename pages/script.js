@@ -12,7 +12,7 @@ let descriptionProfile = document.querySelector('.profile__description')
 const popupToggle = function(event) {
   popup.classList.toggle('popup_opened') // добавляем или убираем класс попапу
 
-  if (event.target === editButton) {
+  if (popup.classList.contains('popup_opened')) {
   nameInput.value = nameProfile.textContent; // заполняем графу name
   descriptionInput.value = descriptionProfile.textContent; // заполняем графу description
   }
