@@ -144,15 +144,41 @@ const placeSubmitHandler = function(evt) {
 
 // Открытие и закрытие попапа place
 
-const popupPlaceToggle = function(evt) {
+const popupPlaceToggle = function (evt) {
   popupPlace.classList.toggle('popup-place_opened') // добавляем или убираем класс попапу place
 }
 
 // закрытие попапа Place по клику на полупрозрачный фон
-const closePlacePopup = function(evt) {
+const closePlacePopup = function (evt) {
   if (evt.target !== evt.currentTarget) { return } 
   popupPlaceToggle(evt)
 }
+
+// ЛАЙКИ
+
+let likeButton = document.querySelectorAll('.place__button')
+
+const like = function (evt) {
+  evt.target.classList.toggle('place__button_liked')
+}
+
+likeButton.forEach(function (item) { 
+  item.addEventListener('click', like)
+})
+
+// Удаление карточки
+
+let deleteButton = document.querySelectorAll('.place__button-delete')
+
+function deleteCard(evt) {
+  const card = evt.target.closest('.place');
+
+  card.remove();
+}
+
+deleteButton.forEach(function (item) { 
+  item.addEventListener('click', deleteCard)
+})
 
 // Слушатели
 
