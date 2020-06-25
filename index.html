@@ -30,14 +30,25 @@
             <ul class="places__list">
             </ul>
         </section>
-        <section class="popup">
+        <section class="popup popup-info">
           <div class="popup__info">
-            <button class="popup__close transition" type="button" aria-label="Закрыть"></button>
+            <button class="popup__close popup-info__close transition" type="button" aria-label="Закрыть"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form class="popup__form" name="info" method="get" action="#">
+            <form class="popup__form popup-info__form" name="info" method="get" action="#">
               <input class="popup__input popup__input_name" type="text" name="name" placeholder="Имя" required>
               <input class="popup__input popup__input_description" type="text" name="description" placeholder="О себе" required>
               <button class="popup__button" type="submit">Сохранить</button>
+            </form>
+          </div>
+        </section>
+        <section class="popup popup-place">
+          <div class="popup__info">
+            <button class="popup__close popup-place__close transition" type="button" aria-label="Закрыть"></button>
+            <h2 class="popup__title">Новое место</h2>
+            <form class="popup__form popup-place__form" name="info" method="get" action="#">
+              <input class="popup__input popup__input_place-name" type="text" name="place-name" placeholder="Название" required>
+              <input class="popup__input popup__input_link" type="text" name="link" placeholder="Ссылка на картинку" required>
+              <button class="popup__button" type="submit">Создать</button>
             </form>
           </div>
         </section>

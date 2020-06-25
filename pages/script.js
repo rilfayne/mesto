@@ -1,38 +1,45 @@
 const editButton = document.querySelector('.profile__edit-button')
-const popup = document.querySelector('.popup')
-const closeButton = popup.querySelector('.popup__close')
-const form = popup.querySelector('.popup__form')
-let nameInput = popup.querySelector('.popup__input_name')
-let descriptionInput = popup.querySelector('.popup__input_description')
+const popupInfo = document.querySelector('.popup-info')
+const closeInfoButton = popupInfo.querySelector('.popup-info__close')
+const formInfo = popupInfo.querySelector('.popup-info__form')
+let nameInput = popupInfo.querySelector('.popup__input_name')
+let descriptionInput = popupInfo.querySelector('.popup__input_description')
 let nameProfile = document.querySelector('.profile__name')
 let descriptionProfile = document.querySelector('.profile__description')
+const addButton = document.querySelector('.profile__add-button')
+const popupPlace = document.querySelector('.popup-place')
+const closePlaceButton = popupPlace.querySelector('.popup-place__close')
+const placeList = document.querySelector('.places__list')
+let newPlaceNameInput = popupPlace.querySelector('.popup__input_place-name')
+let newPlaceLinkInput = popupPlace.querySelector('.popup__input_link')
+const formPlace = popupPlace.querySelector('.popup-place__form')
 
 // Открытие и закрытие попапа
 
-const popupToggle = function(event) {
-  popup.classList.toggle('popup_opened') // добавляем или убираем класс попапу
+const popupInfoToggle = function(evt) {
+  popupInfo.classList.toggle('popup-info_opened') // добавляем или убираем класс попапу
 
-  if (popup.classList.contains('popup_opened')) {
+  if (popupInfo.classList.contains('popup-info_opened')) {
   nameInput.value = nameProfile.textContent; // заполняем графу name
   descriptionInput.value = descriptionProfile.textContent; // заполняем графу description
   }
 }
 
-// закрытие попапа по клику на полупрозрачный фон
-const closePopup = function(event) {
-  if (event.target !== event.currentTarget) { return } 
-  popupToggle()
+// закрытие попапа Info по клику на полупрозрачный фон
+const closeInfoPopup = function(evt) {
+  if (evt.target !== evt.currentTarget) { return } 
+  popupInfoToggle(evt)
 }
 
 // Изменение данных профиля
 
-const formSubmitHandler = function(event) {
-  event.preventDefault();
+const formSubmitHandler = function(evt) {
+  evt.preventDefault();
   
   nameProfile.textContent = nameInput.value;
   descriptionProfile.textContent = descriptionInput.value;
 
-  popupToggle() // закрываем окно
+  popupInfoToggle(evt) // закрываем окно
 }
 
 // Реализуем добавление шести карточек при загрузке страницы
@@ -72,28 +79,88 @@ const initialCards = [
   }
 ];
 
-const placeList = document.querySelector('.places__list')
+//загрузка карточек из массива
+const showCards = function() {
+  initialCards.forEach(function (place) {
+      // берем содержимое тега template
+      const placeTemplate = document.querySelector('#place').content
 
-const addPlace = initialCards.forEach(function (place) {
+      // клонируем содержимое тега template
+      const placeElement = placeTemplate.cloneNode(true)
+
+      // наполняем сожержимым из массива initialCards
+      placeElement.querySelector('.place__image').src = place.link
+      placeElement.querySelector('.place__image').alt = place.alt
+      placeElement.querySelector('.place__name').textContent = place.name
+
+      // отображаем на странице
+      placeList.append(placeElement)
+  });
+}
+showCards()
+
+// ДОБАВИМ НОВУЮ КАРТОЧКУ
+
+const placeSubmitHandler = function(evt) {
+  evt.preventDefault();
+
+  // подгружаем данные из формы в массив
+
+  initialCards.unshift({
+    name: newPlaceNameInput.value,
+    link: newPlaceLinkInput.value,
+    alt: newPlaceNameInput.value
+  });
+
+  //ВСТАВИМ НОВУЮ КАРТОЧКУ НА СТРАНИЦУ
+
+  // выбираем только что добавленный элемент массива
+  const newElement = initialCards[0]
+
+  const addOneCard = function (newElement) {
     // берем содержимое тега template
     const placeTemplate = document.querySelector('#place').content
 
     // клонируем содержимое тега template
     const placeElement = placeTemplate.cloneNode(true)
 
-    // наполняем сожержимым из массива initialCards
-    placeElement.querySelector('.place__image').src = place.link
-    placeElement.querySelector('.place__image').alt = place.alt
-    placeElement.querySelector('.place__name').textContent = place.name
+    // наполняем сожержимым из нового элемента массива
+    placeElement.querySelector('.place__image').src = newElement.link
+    placeElement.querySelector('.place__image').alt = newElement.alt
+    placeElement.querySelector('.place__name').textContent = newElement.name
 
     // отображаем на странице
-    placeList.append(placeElement)
-});
+    placeList.prepend(placeElement)
+  }
+  addOneCard(newElement)
+  
+  // закрываем окно
+  popupPlaceToggle(evt)
 
+  // обнуляем поля в форме
+  newPlaceLinkInput.value = '' 
+  newPlaceNameInput.value = ''
+}
+
+// Открытие и закрытие попапа place
+
+const popupPlaceToggle = function(evt) {
+  popupPlace.classList.toggle('popup-place_opened') // добавляем или убираем класс попапу place
+}
+
+// закрытие попапа Place по клику на полупрозрачный фон
+const closePlacePopup = function(evt) {
+  if (evt.target !== evt.currentTarget) { return } 
+  popupPlaceToggle(evt)
+}
 
 // Слушатели
 
-editButton.addEventListener('click', popupToggle)
-closeButton.addEventListener('click', popupToggle)
-popup.addEventListener('click', closePopup)
-form.addEventListener('submit', formSubmitHandler)
+editButton.addEventListener('click', popupInfoToggle)
+closeInfoButton.addEventListener('click', popupInfoToggle)
+popupInfo.addEventListener('click', closeInfoPopup)
+formInfo.addEventListener('submit', formSubmitHandler)
+addButton.addEventListener('click', popupPlaceToggle)
+closePlaceButton.addEventListener('click', popupPlaceToggle)
+popupPlace.addEventListener('click', closePlacePopup)
+formPlace.addEventListener('submit', placeSubmitHandler)
