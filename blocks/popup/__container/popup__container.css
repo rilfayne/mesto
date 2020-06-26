@@ -1,4 +1,4 @@
-.popup__info {
+.popup__container {
   display: block;
   background: white;
   border-radius: 10px;
@@ -9,7 +9,7 @@
 }
 
 @media screen and (max-width: 430px) {
-  .popup__info {
+  .popup__container {
     min-width: calc(100% - 72px);
   }
 }

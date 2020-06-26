@@ -1,51 +1,3 @@
-const editButton = document.querySelector('.profile__edit-button')
-const popupInfo = document.querySelector('.popup-info')
-const closeInfoButton = popupInfo.querySelector('.popup-info__close')
-const formInfo = popupInfo.querySelector('.popup-info__form')
-let nameInput = popupInfo.querySelector('.popup__input_name')
-let descriptionInput = popupInfo.querySelector('.popup__input_description')
-let nameProfile = document.querySelector('.profile__name')
-let descriptionProfile = document.querySelector('.profile__description')
-const addButton = document.querySelector('.profile__add-button')
-const popupPlace = document.querySelector('.popup-place')
-const closePlaceButton = popupPlace.querySelector('.popup-place__close')
-const placeList = document.querySelector('.places__list')
-let newPlaceNameInput = popupPlace.querySelector('.popup__input_place-name')
-let newPlaceLinkInput = popupPlace.querySelector('.popup__input_link')
-const formPlace = popupPlace.querySelector('.popup-place__form')
-
-// Открытие и закрытие попапа
-
-const popupInfoToggle = function(evt) {
-  popupInfo.classList.toggle('popup-info_opened') // добавляем или убираем класс попапу
-
-  if (popupInfo.classList.contains('popup-info_opened')) {
-  nameInput.value = nameProfile.textContent; // заполняем графу name
-  descriptionInput.value = descriptionProfile.textContent; // заполняем графу description
-  }
-}
-
-// закрытие попапа Info по клику на полупрозрачный фон
-const closeInfoPopup = function(evt) {
-  if (evt.target !== evt.currentTarget) { return } 
-  popupInfoToggle(evt)
-}
-
-// Изменение данных профиля
-
-const formSubmitHandler = function(evt) {
-  evt.preventDefault();
-  
-  nameProfile.textContent = nameInput.value;
-  descriptionProfile.textContent = descriptionInput.value;
-
-  popupInfoToggle(evt) // закрываем окно
-}
-
-// Реализуем добавление шести карточек при загрузке страницы
-
-// Массив с данным для шести карточек 
-
 const initialCards = [
   {
       name: 'Сибирь',
@@ -77,116 +29,141 @@ const initialCards = [
       link: 'https://images.unsplash.com/photo-1516128935666-9742cf27e24c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=975&q=80',
       alt: 'Сосновый лес'
   }
-];
+]
 
-//загрузка карточек из массива
-const showCards = function() {
-  initialCards.forEach(function (place) {
-      // берем содержимое тега template
-      const placeTemplate = document.querySelector('#place').content
+const editButton = document.querySelector('.profile__edit-button')
+const popupInfo = document.querySelector('.popup_info')
+const popupPlace = document.querySelector('.popup_place')
+const formInfo = document.querySelector('.popup__form_info')
+const nameInput = document.querySelector('.popup__input_name')
+const descriptionInput = document.querySelector('.popup__input_description')
+const nameProfile = document.querySelector('.profile__name')
+const descriptionProfile = document.querySelector('.profile__description')
+const addButton = document.querySelector('.profile__add-button')
+const closeButtonInfo = document.querySelector('.popup__close_info')
+const closeButtonPlace = document.querySelector('.popup__close_place')
+const formPlace = document.querySelector('.popup__form_place')
 
-      // клонируем содержимое тега template
-      const placeElement = placeTemplate.cloneNode(true)
+// Открытие попапа Info
 
-      // наполняем сожержимым из массива initialCards
-      placeElement.querySelector('.place__image').src = place.link
-      placeElement.querySelector('.place__image').alt = place.alt
-      placeElement.querySelector('.place__name').textContent = place.name
+const openPopupInfo = function() {
 
-      // отображаем на странице
-      placeList.append(placeElement)
-  });
+  popupInfo.classList.add('popup_opened')
+
+  nameInput.value = nameProfile.textContent;
+  descriptionInput.value = descriptionProfile.textContent;
 }
-showCards()
+
+// Открытие попапа Place
+
+const openPopupPlace = function() {
+  popupPlace.classList.add('popup_opened')
+}
+
+// Закрытие попапа Info
+
+const closePopupInfo = function() {
+  popupInfo.classList.remove('popup_opened')
+}
+
+// Закрытие попапа Place
+
+const closePopupPlace = function() {
+  popupPlace.classList.remove('popup_opened')
+}
+
+// Закрытие попапа по клику на полупрозрачный фон
+const closePopupOutside = function(evt) {
+  if (evt.target !== evt.currentTarget) { return } 
+  closePopupInfo(evt)
+  closePopupPlace(evt)
+}
+
+// Изменение данных профиля
+
+const formSubmitHandler = function(evt) {
+  evt.preventDefault();
+  
+  nameProfile.textContent = nameInput.value;
+  descriptionProfile.textContent = descriptionInput.value;
+
+  closePopupInfo(evt)
+}
+
+// Загрузка карточек из массива
+
+const showCards = function(place) {
+  // клонируем содержимое тега template
+  const placeTemplate = document.querySelector('.place-template').content
+  const placeElement = placeTemplate.cloneNode(true)
+  const placeList = document.querySelector('.places__list')
+
+  // наполняем сожержимым из массива initialCards
+  placeElement.querySelector('.place__image').src = place.link
+  placeElement.querySelector('.place__image').alt = place.alt
+  placeElement.querySelector('.place__name').textContent = place.name
+
+  addNewPlaceListener(placeElement)
+  // отображаем на странице
+  placeList.prepend(placeElement)
+}
+
+function addNewPlaceListener (placeElement) {
+  placeElement.querySelector('.place__button-delete').addEventListener('click', deleteCard)
+  placeElement.querySelector('.place__button').addEventListener('click', like)
+}
 
 // ДОБАВИМ НОВУЮ КАРТОЧКУ
 
 const placeSubmitHandler = function(evt) {
   evt.preventDefault();
 
-  // подгружаем данные из формы в массив
+  let newPlaceNameInput = document.querySelector('.popup__input_place-name')
+  let newPlaceLinkInput = document.querySelector('.popup__input_link')
 
-  initialCards.unshift({
+  // подгружаем данные из формы в массив
+  
+  const placeName = {
     name: newPlaceNameInput.value,
     link: newPlaceLinkInput.value,
     alt: newPlaceNameInput.value
-  });
-
-  //ВСТАВИМ НОВУЮ КАРТОЧКУ НА СТРАНИЦУ
-
-  // выбираем только что добавленный элемент массива
-  const newElement = initialCards[0]
-
-  const addOneCard = function (newElement) {
-    // берем содержимое тега template
-    const placeTemplate = document.querySelector('#place').content
-
-    // клонируем содержимое тега template
-    const placeElement = placeTemplate.cloneNode(true)
-
-    // наполняем сожержимым из нового элемента массива
-    placeElement.querySelector('.place__image').src = newElement.link
-    placeElement.querySelector('.place__image').alt = newElement.alt
-    placeElement.querySelector('.place__name').textContent = newElement.name
-
-    // отображаем на странице
-    placeList.prepend(placeElement)
   }
-  addOneCard(newElement)
-  
+
+  showCards(placeName)
   // закрываем окно
-  popupPlaceToggle(evt)
+  closePopupPlace(evt)
 
   // обнуляем поля в форме
   newPlaceLinkInput.value = '' 
   newPlaceNameInput.value = ''
 }
 
-// Открытие и закрытие попапа place
-
-const popupPlaceToggle = function (evt) {
-  popupPlace.classList.toggle('popup-place_opened') // добавляем или убираем класс попапу place
-}
-
-// закрытие попапа Place по клику на полупрозрачный фон
-const closePlacePopup = function (evt) {
-  if (evt.target !== evt.currentTarget) { return } 
-  popupPlaceToggle(evt)
-}
-
 // ЛАЙКИ
-
-let likeButton = document.querySelectorAll('.place__button')
 
 const like = function (evt) {
   evt.target.classList.toggle('place__button_liked')
 }
 
-likeButton.forEach(function (item) { 
-  item.addEventListener('click', like)
-})
-
 // Удаление карточки
 
-let deleteButton = document.querySelectorAll('.place__button-delete')
-
-function deleteCard(evt) {
+const deleteCard = function (evt) {
   const card = evt.target.closest('.place');
 
   card.remove();
 }
 
-deleteButton.forEach(function (item) { 
-  item.addEventListener('click', deleteCard)
-})
-
 // Слушатели
 
-editButton.addEventListener('click', popupInfoToggle)
-closeInfoButton.addEventListener('click', popupInfoToggle)
-popupInfo.addEventListener('click', closeInfoPopup)
+editButton.addEventListener('click', openPopupInfo)
+addButton.addEventListener('click', openPopupPlace)
+closeButtonInfo.addEventListener('click', closePopupInfo)
+closeButtonPlace.addEventListener('click', closePopupPlace)
+popupInfo.addEventListener('click', closePopupOutside)
+popupPlace.addEventListener('click', closePopupOutside)
 formInfo.addEventListener('submit', formSubmitHandler)
-addButton.addEventListener('click', popupPlaceToggle)
-closePlaceButton.addEventListener('click', popupPlaceToggle)
-popupPlace.addEventListener('click', closePlacePopup)
 formPlace.addEventListener('submit', placeSubmitHandler)
+
+// Перебор массива. Для каждого элемента применить функцию showCards
+initialCards.forEach(place => {
+  showCards(place)
+})
