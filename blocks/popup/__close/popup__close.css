@@ -5,17 +5,22 @@
   width: 58px;
   box-shadow: none;
   cursor: pointer;
-  background: url(../../../images/close.svg);
-  padding: 29px 29px;
+  background: url(../../../images/close.svg) center;
+  width: 57px;
+  height: 57px;
   border: none;
+  padding: 0;
 }
 
 .popup__close:hover {
   opacity: .6;
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 480px) {
   .popup__close {
-    right: -10px;
+    width: 42px;
+    height: 42px;
+    top: -38px;
+    right: -38px;
   }
 }

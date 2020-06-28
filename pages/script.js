@@ -37,70 +37,36 @@ const descriptionProfile = document.querySelector('.profile__description')
 const addButton = document.querySelector('.profile__add-button')
 const closeButtonInfo = document.querySelector('.popup__close_info')
 const closeButtonPlace = document.querySelector('.popup__close_place')
-const closeButtonImage = document.querySelector('.popup__close_image')
 const formPlace = document.querySelector('.popup__form_place')
 
-// Открытие попапа Info
+// Открытие и закрытие попапов
 
-const openPopupInfo = function() {
-
-  popupInfo.classList.add('popup_opened')
-
-  nameInput.value = nameProfile.textContent;
-  descriptionInput.value = descriptionProfile.textContent;
+const togglePopup = function(popup) {
+  popup.classList.toggle('popup_opened')
 }
 
-// Открытие попапа Place
+// Заполнение попапа Image
 
-const openPopupPlace = function() {
-  popupPlace.classList.add('popup_opened')
-}
-
-// Открытие попапа Image
-
-const openPopupImage = function (evt) {
-  popupImage.classList.add('popup_opened')
-
+const fillPopupImage = function(evt) {
   const imageTemplate = document.querySelector('.popup-image-template').content
   const imageElement = imageTemplate.cloneNode(true)
-  const imageFigure = document.querySelector('.popup__image-fiqure')
+  const imageContainer = document.querySelector('.popup__image-container')
 
   imageElement.querySelector('.popup__image').src = evt.target.src
   imageElement.querySelector('.popup__image').alt = evt.target.alt
   imageElement.querySelector('.popup__image-name').textContent = evt.target.alt
 
-  imageFigure.append(imageElement)
+  imageContainer.append(imageElement)
+
+  const closeButtonImage = document.querySelector('.popup__close_image')
+  closeButtonImage.addEventListener('click', () => {
+    togglePopup(popupImage)
+    document.querySelector('.popup__image-container').innerHTML = ''
+  })
+
 }
 
-// Закрытие попапа Info
-
-const closePopupInfo = function() {
-  popupInfo.classList.remove('popup_opened')
-}
-
-// Закрытие попапа Place
-
-const closePopupPlace = function() {
-  popupPlace.classList.remove('popup_opened')
-}
-
-// Закрытие попапа Image
-
-const closePopupImage = function() {
-  popupImage.classList.remove('popup_opened')
-  const fiqure = document.querySelector('.popup__image-fiqure')
-  fiqure.innerHTML = ''
-}
-
-// Закрытие попапа по клику на полупрозрачный фон
-const closePopupOutside = function(evt) {
-  if (evt.target !== evt.currentTarget) { return } 
-  closePopupInfo(evt)
-  closePopupPlace(evt)
-  closePopupImage(evt)
-}
-
-// Изменение данных профиля
+// Изменение данных профиля через попапа Info
 
 const formSubmitHandler = function(evt) {
   evt.preventDefault();
@@ -108,10 +74,10 @@ const formSubmitHandler = function(evt) {
   nameProfile.textContent = nameInput.value;
   descriptionProfile.textContent = descriptionInput.value;
 
-  closePopupInfo(evt)
+  togglePopup(popupInfo)
 }
 
-// Загрузка карточек из массива
+// Загрузка карточек на страницу из массива
 
 const showCards = function(place) {
   // клонируем содержимое тега template
@@ -129,13 +95,7 @@ const showCards = function(place) {
   placeList.prepend(placeElement)
 }
 
-const placeListener = function (placeElement) {
-  placeElement.querySelector('.place__button-delete').addEventListener('click', deleteCard)
-  placeElement.querySelector('.place__button-like').addEventListener('click', like)
-  placeElement.querySelector('.place__image').addEventListener('click', openPopupImage)
-}
-
-// ДОБАВИМ НОВУЮ КАРТОЧКУ
+// Добавление новой карточки
 
 const placeSubmitHandler = function(evt) {
   evt.preventDefault();
@@ -148,19 +108,18 @@ const placeSubmitHandler = function(evt) {
   const placeName = {
     name: newPlaceNameInput.value,
     link: newPlaceLinkInput.value,
-    alt: newPlaceNameInput.value
   }
 
   showCards(placeName)
   // закрываем окно
-  closePopupPlace(evt)
+  togglePopup(popupPlace)
 
   // обнуляем поля в форме
   newPlaceLinkInput.value = '' 
   newPlaceNameInput.value = ''
 }
 
-// ЛАЙКИ
+// Лайки
 
 const like = function (evt) {
   evt.target.classList.toggle('place__button-like_active')
@@ -169,23 +128,44 @@ const like = function (evt) {
 // Удаление карточки
 
 const deleteCard = function (evt) {
-  const card = evt.target.closest('.place');
+  evt.target.closest('.place').remove()
+}
 
-  card.remove();
+// Закрытие попапа по клику на полупрозрачный фон
+const closePopupOutside = function(evt) {
+  if (evt.target !== evt.currentTarget) { return } 
+  togglePopup(evt.target)
 }
 
 // Слушатели
 
-editButton.addEventListener('click', openPopupInfo)
-addButton.addEventListener('click', openPopupPlace)
-closeButtonInfo.addEventListener('click', closePopupInfo)
-closeButtonPlace.addEventListener('click', closePopupPlace)
 popupInfo.addEventListener('click', closePopupOutside)
 popupPlace.addEventListener('click', closePopupOutside)
-popupImage.addEventListener('click', closePopupOutside)
+popupImage.addEventListener('click', (evt) => {
+  document.querySelector('.popup__image-container').innerHTML = ''
+  closePopupOutside(evt)
+})
 formInfo.addEventListener('submit', formSubmitHandler)
 formPlace.addEventListener('submit', placeSubmitHandler)
-closeButtonImage.addEventListener('click', closePopupImage)
+editButton.addEventListener('click', () => {
+  nameInput.value = nameProfile.textContent;
+  descriptionInput.value = descriptionProfile.textContent;
+  togglePopup(popupInfo)
+})
+addButton.addEventListener('click', () => {togglePopup(popupPlace)})
+closeButtonInfo.addEventListener('click', () => {togglePopup(popupInfo)})
+closeButtonPlace.addEventListener('click', () => {togglePopup(popupPlace)})
+
+// Слушатели для карточек
+
+const placeListener = function (placeElement) {
+  placeElement.querySelector('.place__button-delete').addEventListener('click', deleteCard)
+  placeElement.querySelector('.place__button-like').addEventListener('click', like)
+  placeElement.querySelector('.place__image').addEventListener('click', (evt) => {
+    fillPopupImage(evt)
+    togglePopup(popupImage)
+  })
+}
 
 // Перебор массива. Для каждого элемента применить функцию showCards
 initialCards.forEach(place => {

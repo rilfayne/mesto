@@ -54,9 +54,6 @@
         </section>
         <section class="popup popup_image">
           <div class="popup__image-container">
-            <button class="popup__close popup__close_image transition" type="button" aria-label="Закрыть"></button>
-            <figure class="popup__image-fiqure">
-            </figure>
           </div>
         </section>
       </main>
@@ -76,8 +73,11 @@
     </li>
   </template>
   <template class="popup-image-template">
-    <img class="popup__image">
-    <figcaption class="popup__image-name"></figcaption>
+      <button class="popup__close popup__close_image transition" type="button" aria-label="Закрыть"></button>
+      <figure class="popup__image-fiqure">
+        <img class="popup__image">
+        <figcaption class="popup__image-name"></figcaption>
+      </figure>
   </template>
 
   <script src="./pages/script.js"></script>
