@@ -4,6 +4,10 @@
 @import url(./__title/popup__title.css);
 @import url(./__input/popup__input.css);
 @import url(./__button/popup__button.css);
+@import url(./__image-container/popup__image-container.css);
+@import url(./__image/popup__image.css);
+@import url(./__image-name/popup__image-name.css);
+@import url(./__image-fiqure/popup__image-fiqure.css);
 
 .popup {
   display: none;
