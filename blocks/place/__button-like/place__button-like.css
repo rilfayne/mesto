@@ -1,4 +1,4 @@
-.place__button {
+.place__button-like {
   margin: 0 17.24px 0 0;
   padding: 0;
   background: url(../../../images/heart.svg);
@@ -10,6 +10,6 @@
   cursor: pointer;
 }
 
-.place__button:hover {
+.place__button-like:hover {
   opacity: .6;
 }

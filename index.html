@@ -27,60 +27,33 @@
           <button class="profile__add-button transition" type="button" aria-label="Добавить фото"></button>
         </section>
         <section class="places indent">
-          <ul class="places__list">
-            <li class="place">
-              <img class="place__image" src="./images/places/siberia2.jpg" alt="Олени">
-              <div class="place__description">
-                <h2 class="place__name">Сибирь</h2>
-                <button class="place__button transition" type="button" aria-label="Нравится"></button>
-              </div>
-            </li>
-            <li class="place">
-              <img class="place__image" src="./images/places/kamchatka.jpg" alt="Сёрфер">
-              <div class="place__description">
-                <h2 class="place__name">Камчатка</h2>
-                <button class="place__button transition" type="button" aria-label="Нравится"></button>
-              </div>
-            </li>
-            <li class="place">
-              <img class="place__image" src="./images/places/baikal.jpg" alt="Байкал">
-              <div class="place__description">
-                <h2 class="place__name">Байкал</h2>
-                <button class="place__button transition" type="button" aria-label="Нравится"></button>
-              </div>
-            </li>
-            <li class="place">
-              <img class="place__image" src="./images/places/kareliya.jpg" alt="Деревня">
-              <div class="place__description">
-                <h2 class="place__name">Карелия</h2>
-                <button class="place__button transition" type="button" aria-label="Нравится"></button>
-              </div>
-            </li>
-            <li class="place">
-              <img class="place__image" src="./images/places/siberia.jpg" alt="Ханты">
-              <div class="place__description">
-                <h2 class="place__name">Сибирь</h2>
-                <button class="place__button transition" type="button" aria-label="Нравится"></button>
-              </div>
-            </li>
-            <li class="place">
-              <img class="place__image" src="./images/places/tulinovka.jpg" alt="Сосны">
-              <div class="place__description">
-                <h2 class="place__name">Тулиновка</h2>
-                <button class="place__button transition" type="button" aria-label="Нравится"></button>
-              </div>
-            </li>
-          </ul>
+            <ul class="places__list">
+            </ul>
         </section>
-        <section class="popup">
-          <div class="popup__info">
-            <button class="popup__close transition" type="button" aria-label="Закрыть"></button>
+        <section class="popup popup_info">
+          <div class="popup__container">
+            <button class="popup__close popup__close_info transition" type="button" aria-label="Закрыть"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form class="popup__form" name="info" method="get" action="#">
+            <form class="popup__form popup__form_info" name="info" method="get" action="#"> 
               <input class="popup__input popup__input_name" type="text" name="name" placeholder="Имя" required>
               <input class="popup__input popup__input_description" type="text" name="description" placeholder="О себе" required>
               <button class="popup__button" type="submit">Сохранить</button>
             </form>
+          </div>
+        </section>
+        <section class="popup popup_place">
+          <div class="popup__container">
+            <button class="popup__close popup__close_place transition" type="button" aria-label="Закрыть"></button>
+            <h2 class="popup__title">Новое место</h2>
+            <form class="popup__form popup__form_place" name="place" method="get" action="#">
+              <input class="popup__input popup__input_place-name" type="text" name="place-name" placeholder="Название" required>
+              <input class="popup__input popup__input_link" type="text" name="link" placeholder="Ссылка на картинку" required>
+              <button class="popup__button" type="submit">Создать</button>
+            </form>
+          </div>
+        </section>
+        <section class="popup popup_image">
+          <div class="popup__image-container">
           </div>
         </section>
       </main>
@@ -88,6 +61,25 @@
         <p class="footer__copyright">&copy; 2020. Оля Сальникова</p>
       </footer>
   </div>
+
+  <template class="place-template">
+    <li class="place">
+      <img class="place__image">
+      <button class="place__button-delete transition" type="button" aria-label="Удалить"></button>
+      <div class="place__description">
+        <h2 class="place__name"></h2>
+        <button class="place__button-like transition" type="button" aria-label="Нравится"></button>
+      </div>
+    </li>
+  </template>
+  <template class="popup-image-template">
+      <button class="popup__close popup__close_image transition" type="button" aria-label="Закрыть"></button>
+      <figure class="popup__image-fiqure">
+        <img class="popup__image">
+        <figcaption class="popup__image-name"></figcaption>
+      </figure>
+  </template>
+
   <script src="./pages/script.js"></script>
 </body>
 </html>

@@ -5,3 +5,7 @@
   align-self: stretch;
   flex-basis: 282px;
 }
+
+.place__image:hover {
+  cursor: pointer;
+}
