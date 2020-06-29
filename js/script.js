@@ -43,6 +43,7 @@ const formPlace = document.querySelector('.popup__form_place')
 
 const togglePopup = function(popup) {
   popup.classList.toggle('popup_opened')
+  document.activeElement.blur()
 }
 
 // Заполнение попапа Image
@@ -109,10 +110,12 @@ const placeSubmitHandler = function(evt) {
     name: newPlaceNameInput.value,
     link: newPlaceLinkInput.value,
   }
-
-  showCards(placeName)
+  // if (newPlaceNameInput.value = '') { return false }
+  // else {
+    showCards(placeName)
+    togglePopup(popupPlace)
+  // }
   // закрываем окно
-  togglePopup(popupPlace)
 
   // обнуляем поля в форме
   newPlaceLinkInput.value = '' 
