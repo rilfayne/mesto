@@ -2,7 +2,7 @@
   position: absolute;
   top: 18px;
   right: 15px;
-  background: url(../../../images/delete.svg);
+  background: url(../../../images/delete.svg) no-repeat;
   width: 18px;
   height: 19.3px;
   object-fit: cover;

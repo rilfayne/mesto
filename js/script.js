@@ -58,13 +58,6 @@ const fillPopupImage = function(evt) {
   imageElement.querySelector('.popup__image-name').textContent = evt.target.alt
 
   imageContainer.append(imageElement)
-
-  const closeButtonImage = document.querySelector('.popup__close_image')
-  closeButtonImage.addEventListener('click', () => {
-    togglePopup(popupImage)
-    document.querySelector('.popup__image-container').innerHTML = ''
-  })
-
 }
 
 // Изменение данных профиля через попапа Info
@@ -110,12 +103,9 @@ const placeSubmitHandler = function(evt) {
     name: newPlaceNameInput.value,
     link: newPlaceLinkInput.value,
   }
-  // if (newPlaceNameInput.value = '') { return false }
-  // else {
+
     showCards(placeName)
     togglePopup(popupPlace)
-  // }
-  // закрываем окно
 
   // обнуляем поля в форме
   newPlaceLinkInput.value = '' 
@@ -126,6 +116,7 @@ const placeSubmitHandler = function(evt) {
 
 const like = function (evt) {
   evt.target.classList.toggle('place__button-like_active')
+  document.activeElement.blur()
 }
 
 // Удаление карточки
@@ -145,8 +136,11 @@ const closePopupOutside = function(evt) {
 popupInfo.addEventListener('click', closePopupOutside)
 popupPlace.addEventListener('click', closePopupOutside)
 popupImage.addEventListener('click', (evt) => {
-  document.querySelector('.popup__image-container').innerHTML = ''
-  closePopupOutside(evt)
+  if (evt.target === popupImage.querySelector('.popup__image')) { return }
+  else {
+      document.querySelector('.popup__image-container').innerHTML = ''
+      togglePopup(popupImage)
+  }
 })
 formInfo.addEventListener('submit', formSubmitHandler)
 formPlace.addEventListener('submit', placeSubmitHandler)
