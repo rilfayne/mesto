@@ -131,6 +131,19 @@ const closePopupOutside = function(evt) {
   togglePopup(evt.target)
 }
 
+// Закрытие попапа по клику на Esc
+
+const closePopupEsc = function(popup) {
+  document.addEventListener('keyup', (evt) => {
+    if (evt.key === 'Escape') {
+      popup.classList.remove('popup_opened')
+    }
+    if (popup === popupImage) {
+      document.querySelector('.popup__image-container').innerHTML = ''
+    }
+  })
+}
+
 // Слушатели
 
 popupInfo.addEventListener('click', closePopupOutside)
@@ -148,8 +161,12 @@ editButton.addEventListener('click', () => {
   nameInput.value = nameProfile.textContent;
   descriptionInput.value = descriptionProfile.textContent;
   togglePopup(popupInfo)
+  closePopupEsc(popupInfo)
 })
-addButton.addEventListener('click', () => {togglePopup(popupPlace)})
+addButton.addEventListener('click', () => {
+  togglePopup(popupPlace)
+  closePopupEsc(popupPlace)
+})
 closeButtonInfo.addEventListener('click', () => {togglePopup(popupInfo)})
 closeButtonPlace.addEventListener('click', () => {togglePopup(popupPlace)})
 
@@ -160,6 +177,7 @@ const placeListener = function (placeElement) {
   placeElement.querySelector('.place__button-like').addEventListener('click', like)
   placeElement.querySelector('.place__image').addEventListener('click', (evt) => {
     fillPopupImage(evt)
+    closePopupEsc(popupImage)
     togglePopup(popupImage)
   })
 }
