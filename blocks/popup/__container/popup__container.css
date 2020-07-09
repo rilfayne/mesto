@@ -5,12 +5,12 @@
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   position: relative;
   padding: 34px 36px;
-  min-width: 358px;
+  width: 358px;
 }
 
 @media screen and (max-width: 520px) {
   .popup__container {
-    min-width: 62.5%;
+    width: 62.5%;
     padding: 30px 20px;
   }
 }

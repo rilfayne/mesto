@@ -1,30 +1,3 @@
-const initialCards = [
-  {
-      name: 'Сибирь',
-      link: 'https://images.unsplash.com/photo-1589659925724-1dbf17849e93?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'
-  },
-  {
-      name: 'Камчатка',
-      link: 'https://images.unsplash.com/photo-1580474256381-f98bb0532dc4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80'
-  },
-  {
-      name: 'Байкал',
-      link: 'https://images.unsplash.com/photo-1552857407-c7e8dec595e1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=973&q=80'
-  },
-  {
-      name: 'Карелия',
-      link: 'https://images.unsplash.com/photo-1559029884-4e34093db5b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80'
-  },
-  {
-      name: 'Байкал',
-      link: 'https://images.unsplash.com/photo-1552321570-b74810c6265d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'
-  },
-  {
-      name: 'Тулиновка',
-      link: 'https://images.unsplash.com/photo-1516128935666-9742cf27e24c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=975&q=80'
-  }
-]
-
 const editButton = document.querySelector('.profile__edit-button')
 const popupInfo = document.querySelector('.popup_info')
 const popupPlace = document.querySelector('.popup_place')
@@ -46,6 +19,35 @@ const togglePopup = function(popup) {
   document.activeElement.blur()
 }
 
+// Функция очистки формы
+
+const resetForm = function(form) {
+  form.reset()
+}
+
+// Функция очистки ошибок при открытии попапа
+
+const hideError = (form) => {
+  const inputList = Array.from(form.querySelectorAll('.popup__input'))
+  const errorElement = Array.from(form.querySelectorAll('.popup__input-error'))
+
+  inputList.forEach(input => {
+    input.classList.remove('popup__input_type_error')
+  })
+
+  errorElement.forEach(error => {
+    error.classList.remove('popup__input-error_active')
+    error.textContent = ''
+  })
+}
+
+// Функция, которая делает кнопку submit в попапе Info активной при открытии попапа
+
+const activeButton = () => {
+  const submitButton = document.querySelector('.popup__button_type_info')
+  submitButton.classList.remove('popup__button_inactive')
+}
+
 // Заполнение попапа Image
 
 const fillPopupImage = function(evt) {
@@ -60,13 +62,13 @@ const fillPopupImage = function(evt) {
   imageContainer.append(imageElement)
 }
 
-// Изменение данных профиля через попапа Info
+// Изменение данных профиля через попап Info
 
 const formSubmitHandler = function(evt) {
   evt.preventDefault();
   
-  nameProfile.textContent = nameInput.value;
-  descriptionProfile.textContent = descriptionInput.value;
+  nameProfile.textContent = nameInput.value
+  descriptionProfile.textContent = descriptionInput.value
 
   togglePopup(popupInfo)
 }
@@ -108,8 +110,7 @@ const placeSubmitHandler = function(evt) {
     togglePopup(popupPlace)
 
   // обнуляем поля в форме
-  newPlaceLinkInput.value = '' 
-  newPlaceNameInput.value = ''
+  resetForm(formPlace)
 }
 
 // Лайки
@@ -158,14 +159,18 @@ popupImage.addEventListener('click', (evt) => {
 formInfo.addEventListener('submit', formSubmitHandler)
 formPlace.addEventListener('submit', placeSubmitHandler)
 editButton.addEventListener('click', () => {
-  nameInput.value = nameProfile.textContent;
-  descriptionInput.value = descriptionProfile.textContent;
+  nameInput.value = nameProfile.textContent
+  descriptionInput.value = descriptionProfile.textContent
+  hideError(formInfo)
   togglePopup(popupInfo)
   closePopupEsc(popupInfo)
+  activeButton()
 })
 addButton.addEventListener('click', () => {
+  hideError(formPlace)
   togglePopup(popupPlace)
   closePopupEsc(popupPlace)
+  resetForm(formPlace)
 })
 closeButtonInfo.addEventListener('click', () => {togglePopup(popupInfo)})
 closeButtonPlace.addEventListener('click', () => {togglePopup(popupPlace)})
