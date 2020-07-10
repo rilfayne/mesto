@@ -43,9 +43,15 @@ const hideError = (form) => {
 
 // Функция, которая делает кнопку submit в попапе Info активной при открытии попапа
 
-const activeButton = () => {
+const resetButton = (popup) => {
+  if (popup === popupInfo) {
   const submitButton = document.querySelector('.popup__button_type_info')
   submitButton.classList.remove('popup__button_inactive')
+  }
+  else {
+  const submitButton = document.querySelector('.popup__button_type_place')
+  submitButton.classList.add('popup__button_inactive')
+  }
 }
 
 // Заполнение попапа Image
@@ -164,13 +170,14 @@ editButton.addEventListener('click', () => {
   hideError(formInfo)
   togglePopup(popupInfo)
   closePopupEsc(popupInfo)
-  activeButton()
+  resetButton(popupInfo)
 })
 addButton.addEventListener('click', () => {
   hideError(formPlace)
   togglePopup(popupPlace)
   closePopupEsc(popupPlace)
   resetForm(formPlace)
+  resetButton(popupPlace)
 })
 closeButtonInfo.addEventListener('click', () => {togglePopup(popupInfo)})
 closeButtonPlace.addEventListener('click', () => {togglePopup(popupPlace)})
