@@ -11,12 +11,23 @@ const addButton = document.querySelector('.profile__add-button')
 const closeButtonInfo = document.querySelector('.popup__close_info')
 const closeButtonPlace = document.querySelector('.popup__close_place')
 const formPlace = document.querySelector('.popup__form_place')
+const newPlaceNameInput = document.querySelector('.popup__input_place-name')
+const newPlaceLinkInput = document.querySelector('.popup__input_link')
 
 // Открытие и закрытие попапов
 
 const togglePopup = function(popup) {
   popup.classList.toggle('popup_opened')
   document.activeElement.blur()
+
+  if (popup.classList.contains('popup_opened')) {
+    document.addEventListener('keyup', closePopupEsc)
+    popup.addEventListener('click', closePopupOutside)
+  }
+  else {
+    document.removeEventListener('keyup', closePopupEsc)
+    popup.removeEventListener('click', closePopupOutside)
+  }
 }
 
 // Функция очистки формы
@@ -25,53 +36,25 @@ const resetForm = function(form) {
   form.reset()
 }
 
-// Функция очистки ошибок при открытии попапа
-
-const hideError = (form) => {
-  const inputList = Array.from(form.querySelectorAll('.popup__input'))
-  const errorElement = Array.from(form.querySelectorAll('.popup__input-error'))
-
-  inputList.forEach(input => {
-    input.classList.remove('popup__input_type_error')
-  })
-
-  errorElement.forEach(error => {
-    error.classList.remove('popup__input-error_active')
-    error.textContent = ''
-  })
-}
-
-// Функция, которая делает кнопку submit в попапе Info активной при открытии попапа
-
-const resetButton = (popup) => {
-  if (popup === popupInfo) {
-  const submitButton = document.querySelector('.popup__button_type_info')
-  submitButton.classList.remove('popup__button_inactive')
-  }
-  else {
-  const submitButton = document.querySelector('.popup__button_type_place')
-  submitButton.classList.add('popup__button_inactive')
-  }
-}
-
 // Заполнение попапа Image
 
 const fillPopupImage = function(evt) {
-  const imageTemplate = document.querySelector('.popup-image-template').content
-  const imageElement = imageTemplate.cloneNode(true)
-  const imageContainer = document.querySelector('.popup__image-container')
+  const imageInPopup = document.querySelector('.popup__image')
+  const nameImageInPopup = document.querySelector('.popup__image-name')
 
-  imageElement.querySelector('.popup__image').src = evt.target.src
-  imageElement.querySelector('.popup__image').alt = evt.target.alt
-  imageElement.querySelector('.popup__image-name').textContent = evt.target.alt
+    imageInPopup.src = ''
+    imageInPopup.alt = ''
+    nameImageInPopup.textContent = ''
 
-  imageContainer.append(imageElement)
+    imageInPopup.src = evt.target.src
+    imageInPopup.alt = evt.target.alt
+    nameImageInPopup.textContent = evt.target.alt
 }
 
 // Изменение данных профиля через попап Info
 
 const formSubmitHandler = function(evt) {
-  evt.preventDefault();
+  evt.preventDefault()
   
   nameProfile.textContent = nameInput.value
   descriptionProfile.textContent = descriptionInput.value
@@ -86,13 +69,16 @@ const showCards = function(place) {
   const placeTemplate = document.querySelector('.place-template').content
   const placeElement = placeTemplate.cloneNode(true)
   const placeList = document.querySelector('.places__list')
+  const placeImage = placeElement.querySelector('.place__image')
 
   // наполняем сожержимым из массива
-  placeElement.querySelector('.place__image').src = place.link
-  placeElement.querySelector('.place__image').alt = place.name
+  placeImage.src = place.link
+  placeImage.alt = place.name
   placeElement.querySelector('.place__name').textContent = place.name
 
+  // добавляем слушатели на элементы карточки
   placeListener(placeElement)
+
   // отображаем на странице
   placeList.prepend(placeElement)
 }
@@ -100,13 +86,9 @@ const showCards = function(place) {
 // Добавление новой карточки
 
 const placeSubmitHandler = function(evt) {
-  evt.preventDefault();
-
-  let newPlaceNameInput = document.querySelector('.popup__input_place-name')
-  let newPlaceLinkInput = document.querySelector('.popup__input_link')
+  evt.preventDefault()
 
   // подгружаем данные из формы в массив
-  
   const placeName = {
     name: newPlaceNameInput.value,
     link: newPlaceLinkInput.value,
@@ -114,7 +96,6 @@ const placeSubmitHandler = function(evt) {
 
     showCards(placeName)
     togglePopup(popupPlace)
-
   // обнуляем поля в форме
   resetForm(formPlace)
 }
@@ -132,7 +113,7 @@ const deleteCard = function (evt) {
   evt.target.closest('.place').remove()
 }
 
-// Закрытие попапа по клику на полупрозрачный фон
+// Закрытие попапа по клику на оверлей
 const closePopupOutside = function(evt) {
   if (evt.target !== evt.currentTarget) { return } 
   togglePopup(evt.target)
@@ -140,44 +121,39 @@ const closePopupOutside = function(evt) {
 
 // Закрытие попапа по клику на Esc
 
-const closePopupEsc = function(popup) {
-  document.addEventListener('keyup', (evt) => {
-    if (evt.key === 'Escape') {
-      popup.classList.remove('popup_opened')
-    }
-    if (popup === popupImage) {
-      document.querySelector('.popup__image-container').innerHTML = ''
-    }
-  })
+const closePopupEsc = function(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened')
+    togglePopup(openedPopup)
+  }
 }
 
 // Слушатели
 
-popupInfo.addEventListener('click', closePopupOutside)
-popupPlace.addEventListener('click', closePopupOutside)
 popupImage.addEventListener('click', (evt) => {
   if (evt.target === popupImage.querySelector('.popup__image')) { return }
   else {
-      document.querySelector('.popup__image-container').innerHTML = ''
       togglePopup(popupImage)
   }
 })
-formInfo.addEventListener('submit', formSubmitHandler)
-formPlace.addEventListener('submit', placeSubmitHandler)
+formInfo.addEventListener('submit', (evt) => {
+  const submitButton = formInfo.querySelector('.popup__button')
+  if (submitButton.classList.contains('popup__button_inactive')) { return }
+  else { formSubmitHandler(evt) }
+})
+formPlace.addEventListener('submit', (evt) => {
+  const submitButton = formPlace.querySelector('.popup__button')
+  if (submitButton.classList.contains('popup__button_inactive')) { return }
+  else { placeSubmitHandler(evt) }
+})
 editButton.addEventListener('click', () => {
   nameInput.value = nameProfile.textContent
   descriptionInput.value = descriptionProfile.textContent
-  hideError(formInfo)
   togglePopup(popupInfo)
-  closePopupEsc(popupInfo)
-  resetButton(popupInfo)
 })
 addButton.addEventListener('click', () => {
-  hideError(formPlace)
   togglePopup(popupPlace)
-  closePopupEsc(popupPlace)
   resetForm(formPlace)
-  resetButton(popupPlace)
 })
 closeButtonInfo.addEventListener('click', () => {togglePopup(popupInfo)})
 closeButtonPlace.addEventListener('click', () => {togglePopup(popupPlace)})
@@ -189,7 +165,6 @@ const placeListener = function (placeElement) {
   placeElement.querySelector('.place__button-like').addEventListener('click', like)
   placeElement.querySelector('.place__image').addEventListener('click', (evt) => {
     fillPopupImage(evt)
-    closePopupEsc(popupImage)
     togglePopup(popupImage)
   })
 }
