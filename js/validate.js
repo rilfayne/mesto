@@ -27,12 +27,10 @@ const isValid = (formElement, inputElement, inputErrorClass, errorClass) => {
 }
 
 // Функция, которая добавляет слушатели всем полям формы
-const setEventListeners = (formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass, errorElement, addButton, editButton, submitPlace, submitInfo) => {
+const setEventListeners = (formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass) => {
   // Находим все поля внутри формы, и сделаем из них массив
   const inputList = Array.from(formElement.querySelectorAll(inputSelector))
   const buttonElement = formElement.querySelector(submitButtonSelector)
-  const buttonAdd = document.querySelector(addButton)
-  const buttonEdit = document.querySelector(editButton)
   // Вызовем функцию, чтобы кнопка была неактивной до ввода данных
     toggleButtonState(inputList, buttonElement, inactiveButtonClass)
   // Обойдём все элементы полученной коллекции
@@ -45,19 +43,10 @@ const setEventListeners = (formElement, inputSelector, submitButtonSelector, ina
       toggleButtonState(inputList, buttonElement, inactiveButtonClass)
     })
   }) 
-  // листенеры для очистки ошибок и обнуления кнопки при открытии форм
-  buttonAdd.addEventListener('click', (evt) => {
-    hideError(formElement, inputList, errorElement, inputErrorClass, errorClass)
-    resetButton(evt, inactiveButtonClass, buttonEdit, submitPlace, submitInfo)
-  })
-  buttonEdit.addEventListener('click', (evt) => {
-    hideError(formElement, inputList, errorElement, inputErrorClass, errorClass)
-    resetButton(evt, inactiveButtonClass, buttonEdit, submitPlace, submitInfo)
-  })
 }
 
 // Функция, которая добавляет слушатели всем формам на странице
-const enableValidation = ({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass, errorElement, addButton, editButton, submitPlace, submitInfo}) => {
+const enableValidation = ({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass}) => {
   // Найдём все формы с указанным классом в DOM и сделаем из них массив
   const formList = Array.from(document.querySelectorAll(formSelector))
 
@@ -69,7 +58,7 @@ const enableValidation = ({ formSelector, inputSelector, submitButtonSelector, i
     })
 
     // Для каждой формы вызовем функцию setEventListeners, передав ей элемент формы
-    setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass, errorElement, addButton, editButton, submitPlace, submitInfo)
+    setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass)
   })
 }
 
@@ -99,31 +88,32 @@ const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
 
 // Функция очистки ошибок при открытии попапа
 
-const hideError = (formElement, inputList, errorElement, inputErrorClass, errorClass) => {
-  const errorList = Array.from(formElement.querySelectorAll(errorElement))
+const hideError = (form) => { 
+  const inputList = Array.from(form.querySelectorAll('.popup__input')) 
+  const errorElement = Array.from(form.querySelectorAll('.popup__input-error')) 
 
-  inputList.forEach(input => {
-    input.classList.remove(inputErrorClass)
-  })
+  inputList.forEach(input => { 
+    input.classList.remove('popup__input_type_error') 
+  }) 
 
-  errorList.forEach(error => {
-    error.classList.remove(errorClass)
-    error.textContent = ''
-  })
-}
+  errorElement.forEach(error => { 
+    error.classList.remove('popup__input-error_active') 
+    error.textContent = '' 
+  }) 
+} 
 
 // Функция, которая делает кнопку submit в попапе Info активной при открытии попапа
 
-const resetButton = (evt, inactiveButtonClass, buttonEdit, submitPlace, submitInfo) => {
-  if (evt.target === buttonEdit) {
-    const submitInfoButton = document.querySelector(submitInfo)
-    submitInfoButton.classList.remove(inactiveButtonClass)
-  }
-  else {
-    const submitPlaceButton = document.querySelector(submitPlace)
-    submitPlaceButton.classList.add(inactiveButtonClass)
-  }
-}
+const resetButton = (popup) => { 
+  if (popup === popupInfo) { 
+  const submitButton = document.querySelector('.popup__button_type_info') 
+  submitButton.classList.remove('popup__button_inactive') 
+  } 
+  else { 
+  const submitButton = document.querySelector('.popup__button_type_place') 
+  submitButton.classList.add('popup__button_inactive') 
+  } 
+} 
 
 // Вызов функции
 
@@ -134,9 +124,4 @@ enableValidation({
   inactiveButtonClass: 'popup__button_inactive',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active',
-  errorElement: '.popup__input-error',
-  addButton: '.profile__add-button',
-  editButton: '.profile__edit-button',
-  submitInfo: '.popup__button_type_info',
-  submitPlace: '.popup__button_type_place'
 })
