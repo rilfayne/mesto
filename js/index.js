@@ -1,3 +1,6 @@
+import { initialCards } from './mocks.js';
+import Card from './Card.js';
+
 const editButton = document.querySelector('.profile__edit-button')
 const popupInfo = document.querySelector('.popup_info')
 const popupPlace = document.querySelector('.popup_place')
@@ -57,30 +60,11 @@ const fillPopupImage = function(evt) {
 
 const formSubmitHandler = function(evt) {
   evt.preventDefault()
-  
+
   nameProfile.textContent = nameInput.value
   descriptionProfile.textContent = descriptionInput.value
 
   togglePopup(popupInfo)
-}
-
-// Загрузка карточек на страницу из массива
-
-const showCards = function(place) {
-  // клонируем содержимое тега template
-  const placeElement = placeTemplate.cloneNode(true)
-  const placeImage = placeElement.querySelector('.place__image')
-
-  // наполняем сожержимым из массива
-  placeImage.src = place.link
-  placeImage.alt = place.name
-  placeElement.querySelector('.place__name').textContent = place.name
-
-  // добавляем слушатели на элементы карточки
-  placeListener(placeElement)
-
-  // отображаем на странице
-  placeList.prepend(placeElement)
 }
 
 // Добавление новой карточки
@@ -100,22 +84,9 @@ const placeSubmitHandler = function(evt) {
   resetForm(formPlace)
 }
 
-// Лайки
-
-const like = function (evt) {
-  evt.target.classList.toggle('place__button-like_active')
-  document.activeElement.blur()
-}
-
-// Удаление карточки
-
-const deleteCard = function (evt) {
-  evt.target.closest('.place').remove()
-}
-
 // Закрытие попапа по клику на оверлей
 const closePopupOutside = function(evt) {
-  if (evt.target !== evt.currentTarget) { return } 
+  if (evt.target !== evt.currentTarget) { return }
   togglePopup(evt.target)
 }
 
@@ -157,20 +128,12 @@ closeButtonInfo.addEventListener('click', () => { togglePopup(popupInfo) })
 closeButtonPlace.addEventListener('click', () => { togglePopup(popupPlace) })
 closeButtonImage.addEventListener('click', () => { togglePopup(popupImage) })
 
-// Слушатели для карточек
-
-const placeListener = function (placeElement) {
-  placeElement.querySelector('.place__button-delete').addEventListener('click', deleteCard)
-  placeElement.querySelector('.place__button-like').addEventListener('click', like)
-  placeElement.querySelector('.place__image').addEventListener('click', (evt) => {
-    fillPopupImage(evt)
-    togglePopup(popupImage)
-  })
-}
-
-// Перебор массива. Для каждого элемента применить функцию showCards
 initialCards.forEach(place => {
-  showCards(place)
+  const card = new Card(place, placeTemplate)
+  const placeElement = card.generateCard();
+
+  placeList.prepend(placeElement)
+
 })
 
-// #АнтонПощади
+export { togglePopup, fillPopupImage }
