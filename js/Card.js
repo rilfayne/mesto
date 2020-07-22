@@ -4,7 +4,7 @@
 // содержит приватные методы для каждого обработчика;
 // содержит один публичный метод, который возвращает полностью работоспособный и наполненный данными элемент карточки.
 //   Для каждой карточки создайте экземпляр класса Card.
-import { togglePopup, fillPopupImage } from './index.js'
+import { togglePopup, fillPopupImage, popupImage } from './index.js'
 
 export default class Card {
   constructor(place, template) {

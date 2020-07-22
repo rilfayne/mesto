@@ -1,5 +1,6 @@
 import { initialCards } from './mocks.js';
 import Card from './Card.js';
+import { resetButton, hideError, FormValidator } from './FormValidator.js';
 
 const editButton = document.querySelector('.profile__edit-button')
 const popupInfo = document.querySelector('.popup_info')
@@ -68,7 +69,6 @@ const formSubmitHandler = function(evt) {
 }
 
 // Добавление новой карточки
-
 const placeSubmitHandler = function(evt) {
   evt.preventDefault()
 
@@ -129,11 +129,34 @@ closeButtonPlace.addEventListener('click', () => { togglePopup(popupPlace) })
 closeButtonImage.addEventListener('click', () => { togglePopup(popupImage) })
 
 initialCards.forEach(place => {
-  const card = new Card(place, placeTemplate)
+  const card = new Card (place, placeTemplate)
   const placeElement = card.generateCard();
 
   placeList.prepend(placeElement)
 
 })
 
-export { togglePopup, fillPopupImage }
+// Создадим два экземпляра класса FormValidator для двух форм
+
+const placeFormValidator = new FormValidator ({
+  formElement: formPlace,
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active',
+})
+
+const infoFormValidator = new FormValidator({
+  formElement: formInfo,
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active',
+})
+
+placeFormValidator.enableValidation()
+infoFormValidator.enableValidation()
+
+export { togglePopup, fillPopupImage, popupImage, popupInfo }
