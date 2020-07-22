@@ -1,21 +1,13 @@
-// Создайте класс FormValidator, который настраивает валидацию полей формы:
-// - принимает в конструктор объект настроек с селекторами и классами формы;
-// - принимает вторым параметром элемент той формы, которая валидируется;
-// - имеет приватные методы, которые обрабатывают форму: проверяют валидность поля,
-// изменяют состояние кнопки сабмита, устанавливают все обработчики;
-// - имеет один публичный метод enableValidation, который включает валидацию формы.
-// Для каждой проверяемой формы создайте экземпляр класса FormValidator.
-
 import { popupInfo } from './index.js'
 
 class FormValidator {
-  constructor({ formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass }) {
+  constructor(settingsObject, formElement) {
     this._formElement = formElement;
-    this._inputSelector = inputSelector;
-    this._submitButtonSelector = submitButtonSelector;
-    this._inactiveButtonClass = inactiveButtonClass;
-    this._inputErrorClass = inputErrorClass;
-    this._errorClass = errorClass;
+    this._inputSelector = settingsObject.inputSelector;
+    this._submitButtonSelector = settingsObject.submitButtonSelector;
+    this._inactiveButtonClass = settingsObject.inactiveButtonClass;
+    this._inputErrorClass = settingsObject.inputErrorClass;
+    this._errorClass = settingsObject.errorClass;
   }
 
   // Метод, который добавляет класс с ошибкой

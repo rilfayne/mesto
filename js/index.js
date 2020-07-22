@@ -23,6 +23,14 @@ const nameImageInPopup = document.querySelector('.popup__image-name')
 const placeTemplate = document.querySelector('.place-template').content
 const placeList = document.querySelector('.places__list')
 
+const settingsObject = {
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active',
+}
+
 // Открытие и закрытие попапов
 
 const togglePopup = function(popup) {
@@ -72,14 +80,19 @@ const formSubmitHandler = function(evt) {
 const placeSubmitHandler = function(evt) {
   evt.preventDefault()
 
-  // подгружаем данные из формы в массив
-  const placeName = {
+  // Создаем новый объект
+  const place = {
     name: newPlaceNameInput.value,
     link: newPlaceLinkInput.value,
   }
 
-    showCards(placeName)
-    togglePopup(popupPlace)
+  // Создаем экземпляр класса Card
+  const newPlaceCard = new Card (place, placeTemplate)
+  const placeElement = newPlaceCard.generateCard();
+
+  placeList.prepend(placeElement)
+
+  togglePopup(popupPlace)
   // обнуляем поля в форме
   resetForm(formPlace)
 }
@@ -138,23 +151,8 @@ initialCards.forEach(place => {
 
 // Создадим два экземпляра класса FormValidator для двух форм
 
-const placeFormValidator = new FormValidator ({
-  formElement: formPlace,
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active',
-})
-
-const infoFormValidator = new FormValidator({
-  formElement: formInfo,
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active',
-})
+const placeFormValidator = new FormValidator (settingsObject, formPlace)
+const infoFormValidator = new FormValidator(settingsObject, formInfo)
 
 placeFormValidator.enableValidation()
 infoFormValidator.enableValidation()
