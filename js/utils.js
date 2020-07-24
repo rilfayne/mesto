@@ -2,6 +2,10 @@ const popupInfo = document.querySelector('.popup_info')
 const popupImage = document.querySelector('.popup_image')
 const imageInPopup = document.querySelector('.popup__image')
 const nameImageInPopup = document.querySelector('.popup__image-name')
+const nameProfile = document.querySelector('.profile__name')
+const descriptionProfile = document.querySelector('.profile__description')
+const nameInput = document.querySelector('.popup__input_name')
+const descriptionInput = document.querySelector('.popup__input_description')
 
 // Открытие и закрытие попапов
 
@@ -92,5 +96,5 @@ const resetButton = (popup) => {
   }
 }
 
-export { popupInfo, popupImage, togglePopup, fillPopupImage, resetForm, formSubmitHandler, hideError, resetButton }
+export { popupInfo, popupImage, nameProfile, descriptionProfile, nameInput, descriptionInput, togglePopup, fillPopupImage, resetForm, formSubmitHandler, hideError, resetButton }
 

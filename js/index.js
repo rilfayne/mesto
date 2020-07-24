@@ -1,15 +1,11 @@
 import { initialCards } from './mocks.js'
 import Card from './Card.js'
 import FormValidator from './FormValidator.js'
-import { popupInfo, popupImage, togglePopup, resetForm, formSubmitHandler, hideError, resetButton } from './utils.js'
+import { popupInfo, popupImage, nameProfile, descriptionProfile, nameInput, descriptionInput, togglePopup, resetForm, formSubmitHandler, hideError, resetButton } from './utils.js'
 
 const editButton = document.querySelector('.profile__edit-button')
 const popupPlace = document.querySelector('.popup_place')
 const formInfo = document.querySelector('.popup__form_info')
-const nameInput = document.querySelector('.popup__input_name')
-const descriptionInput = document.querySelector('.popup__input_description')
-const nameProfile = document.querySelector('.profile__name')
-const descriptionProfile = document.querySelector('.profile__description')
 const addButton = document.querySelector('.profile__add-button')
 const closeButtonInfo = document.querySelector('.popup__close_info')
 const closeButtonPlace = document.querySelector('.popup__close_place')
