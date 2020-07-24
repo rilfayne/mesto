@@ -1,4 +1,4 @@
-import { togglePopup, fillPopupImage, popupImage } from './index.js'
+import { togglePopup, fillPopupImage, popupImage } from './utils.js'
 
 export default class Card {
   constructor(place, template) {
@@ -8,7 +8,7 @@ export default class Card {
   }
 
   // Метод, который клонирует содержимое тега template
-  _getTamplate() {
+  _getTemplate() {
     // клонируем содержимое тега template
     const placeElement = this._template.cloneNode(true)
     return placeElement
@@ -16,7 +16,7 @@ export default class Card {
 
   // Метод, который вставит данные в разметку и подготовит карточку к публикации.
   generateCard() {
-    this._element = this._getTamplate()
+    this._element = this._getTemplate()
     const placeImage = this._element.querySelector('.place__image')
     const placeName = this._element.querySelector('.place__name')
     this._placeListeners();
@@ -50,5 +50,4 @@ export default class Card {
       togglePopup(popupImage)
     })
   }
-
 }

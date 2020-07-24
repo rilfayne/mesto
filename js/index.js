@@ -1,11 +1,10 @@
-import { initialCards } from './mocks.js';
-import Card from './Card.js';
-import { resetButton, hideError, FormValidator } from './FormValidator.js';
+import { initialCards } from './mocks.js'
+import Card from './Card.js'
+import FormValidator from './FormValidator.js'
+import { popupInfo, popupImage, togglePopup, resetForm, formSubmitHandler, hideError, resetButton } from './utils.js'
 
 const editButton = document.querySelector('.profile__edit-button')
-const popupInfo = document.querySelector('.popup_info')
 const popupPlace = document.querySelector('.popup_place')
-const popupImage = document.querySelector('.popup_image')
 const formInfo = document.querySelector('.popup__form_info')
 const nameInput = document.querySelector('.popup__input_name')
 const descriptionInput = document.querySelector('.popup__input_description')
@@ -18,8 +17,6 @@ const closeButtonImage = document.querySelector('.popup__close_image')
 const formPlace = document.querySelector('.popup__form_place')
 const newPlaceNameInput = document.querySelector('.popup__input_place-name')
 const newPlaceLinkInput = document.querySelector('.popup__input_link')
-const imageInPopup = document.querySelector('.popup__image')
-const nameImageInPopup = document.querySelector('.popup__image-name')
 const placeTemplate = document.querySelector('.place-template').content
 const placeList = document.querySelector('.places__list')
 
@@ -29,51 +26,6 @@ const settingsObject = {
   inactiveButtonClass: 'popup__button_inactive',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active',
-}
-
-// Открытие и закрытие попапов
-
-const togglePopup = function(popup) {
-  popup.classList.toggle('popup_opened')
-  document.activeElement.blur()
-
-  if (popup.classList.contains('popup_opened')) {
-    document.addEventListener('keyup', closePopupEsc)
-    popup.addEventListener('mousedown', closePopupOutside)
-  }
-  else {
-    document.removeEventListener('keyup', closePopupEsc)
-    popup.removeEventListener('mousedown', closePopupOutside)
-  }
-}
-
-// Функция очистки формы
-
-const resetForm = function(form) {
-  form.reset()
-}
-
-// Заполнение попапа Image
-
-const fillPopupImage = function(evt) {
-    imageInPopup.src = ''
-    imageInPopup.alt = ''
-    nameImageInPopup.textContent = ''
-
-    imageInPopup.src = evt.target.src
-    imageInPopup.alt = evt.target.alt
-    nameImageInPopup.textContent = evt.target.alt
-}
-
-// Изменение данных профиля через попап Info
-
-const formSubmitHandler = function(evt) {
-  evt.preventDefault()
-
-  nameProfile.textContent = nameInput.value
-  descriptionProfile.textContent = descriptionInput.value
-
-  togglePopup(popupInfo)
 }
 
 // Добавление новой карточки
@@ -95,21 +47,6 @@ const placeSubmitHandler = function(evt) {
   togglePopup(popupPlace)
   // обнуляем поля в форме
   resetForm(formPlace)
-}
-
-// Закрытие попапа по клику на оверлей
-const closePopupOutside = function(evt) {
-  if (evt.target !== evt.currentTarget) { return }
-  togglePopup(evt.target)
-}
-
-// Закрытие попапа по клику на Esc
-
-const closePopupEsc = function(evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened')
-    togglePopup(openedPopup)
-  }
 }
 
 // Слушатели
@@ -146,7 +83,6 @@ initialCards.forEach(place => {
   const placeElement = card.generateCard();
 
   placeList.prepend(placeElement)
-
 })
 
 // Создадим два экземпляра класса FormValidator для двух форм
@@ -156,5 +92,3 @@ const infoFormValidator = new FormValidator(settingsObject, formInfo)
 
 placeFormValidator.enableValidation()
 infoFormValidator.enableValidation()
-
-export { togglePopup, fillPopupImage, popupImage, popupInfo }
