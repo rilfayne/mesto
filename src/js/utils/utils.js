@@ -1,11 +1,4 @@
-const popupInfo = document.querySelector('.popup_info')
-const popupImage = document.querySelector('.popup_image')
-const imageInPopup = document.querySelector('.popup__image')
-const nameImageInPopup = document.querySelector('.popup__image-name')
-const nameProfile = document.querySelector('.profile__name')
-const descriptionProfile = document.querySelector('.profile__description')
-const nameInput = document.querySelector('.popup__input_name')
-const descriptionInput = document.querySelector('.popup__input_description')
+import { popupInfo, imageInPopup, nameImageInPopup, nameProfile, descriptionProfile, nameInput, descriptionInput } from "./constants.js";
 
 // Открытие и закрытие попапов
 
@@ -96,5 +89,5 @@ const resetButton = (popup) => {
   }
 }
 
-export { popupInfo, popupImage, nameProfile, descriptionProfile, nameInput, descriptionInput, togglePopup, fillPopupImage, resetForm, formSubmitHandler, hideError, resetButton }
+export { togglePopup, fillPopupImage, resetForm, formSubmitHandler, hideError, resetButton }
 

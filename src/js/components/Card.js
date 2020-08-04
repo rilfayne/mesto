@@ -1,4 +1,5 @@
-import { togglePopup, fillPopupImage, popupImage } from './utils.js'
+import { togglePopup, fillPopupImage } from '../utils/utils.js'
+import { popupImage } from '../utils/constants.js'
 
 export default class Card {
   constructor(place, template) {
