@@ -1,4 +1,4 @@
-import {newPlaceLinkInput, newPlaceNameInput} from "../utils/constants";
+// import {newPlaceLinkInput, newPlaceNameInput} from "../utils/constants";
 
 export default class Section {
   constructor({ items, renderer }, containerSelector) {

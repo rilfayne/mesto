@@ -1,11 +1,12 @@
-import { togglePopup, fillPopupImage } from '../utils/utils.js'
+import { fillPopupImage } from '../utils/utils.js'
 import { popupImage } from '../utils/constants.js'
 
 export default class Card {
-  constructor(place, template) {
+  constructor(place, template, openPopup) {
     this._name = place.name;
     this._link = place.link;
     this._template = template;
+    this._openPopup = openPopup;
   }
 
   // Метод, который клонирует содержимое тега template
@@ -48,7 +49,7 @@ export default class Card {
     this._element.querySelector('.place__button-like').addEventListener('click', (evt) => { this._like(evt) })
     this._element.querySelector('.place__image').addEventListener('click', (evt) => {
       fillPopupImage(evt)
-      togglePopup(popupImage)
+      this._openPopup(popupImage)
     })
   }
 }
