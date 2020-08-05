@@ -1,52 +1,20 @@
 import { popupInfo, imageInPopup, nameImageInPopup, nameProfile, descriptionProfile, nameInput, descriptionInput } from "./constants.js";
 
-// Открытие и закрытие попапов
-
-// const togglePopup = function(popup) {
-//   popup.classList.toggle('popup_opened')
-//   document.activeElement.blur()
-//
-//   if (popup.classList.contains('popup_opened')) {
-//     document.addEventListener('keyup', closePopupEsc)
-//     popup.addEventListener('mousedown', closePopupOutside)
-//   }
-//   else {
-//     document.removeEventListener('keyup', closePopupEsc)
-//     popup.removeEventListener('mousedown', closePopupOutside)
-//   }
-// }
-
 const handleCardClick = function (popup) {
   popup.classList.add('popup_opened')
-  document.activeElement.blur()
 }
-
-// Закрытие попапа по клику на оверлей
-// const closePopupOutside = function(evt) {
-//   if (evt.target !== evt.currentTarget) { return }
-//   togglePopup(evt.target)
-// }
-
-// Закрытие попапа по клику на Esc
-
-// const closePopupEsc = function(evt) {
-//   if (evt.key === 'Escape') {
-//     const openedPopup = document.querySelector('.popup_opened')
-//     togglePopup(openedPopup)
-//   }
-// }
 
 // Заполнение попапа Image
 
-const fillPopupImage = function(evt) {
-  imageInPopup.src = ''
-  imageInPopup.alt = ''
-  nameImageInPopup.textContent = ''
-
-  imageInPopup.src = evt.target.src
-  imageInPopup.alt = evt.target.alt
-  nameImageInPopup.textContent = evt.target.alt
-}
+// const fillPopupImage = function(evt) {
+//   imageInPopup.src = ''
+//   imageInPopup.alt = ''
+//   nameImageInPopup.textContent = ''
+//
+//   imageInPopup.src = evt.target.src
+//   imageInPopup.alt = evt.target.alt
+//   nameImageInPopup.textContent = evt.target.alt
+// }
 
 // Функция очистки формы
 
@@ -94,5 +62,5 @@ const resetButton = (popup) => {
   }
 }
 
-export { fillPopupImage, resetForm, formSubmitHandler, hideError, resetButton, handleCardClick }
+export { resetForm, formSubmitHandler, hideError, resetButton, handleCardClick }
 

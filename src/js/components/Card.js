@@ -1,5 +1,6 @@
-import { fillPopupImage } from '../utils/utils.js'
+// import { fillPopupImage } from '../utils/utils.js'
 import { popupImage } from '../utils/constants.js'
+import PopupWithImage from "./PopupWithImage";
 
 export default class Card {
   constructor(place, template, openPopup) {
@@ -35,7 +36,6 @@ export default class Card {
   // Лайки
    _like(evt) {
     evt.target.classList.toggle('place__button-like_active')
-    document.activeElement.blur()
   }
 
   // Удаление карточки
@@ -48,7 +48,10 @@ export default class Card {
     this._element.querySelector('.place__button-delete').addEventListener('click', (evt) => { this._deleteCard(evt) })
     this._element.querySelector('.place__button-like').addEventListener('click', (evt) => { this._like(evt) })
     this._element.querySelector('.place__image').addEventListener('click', (evt) => {
-      fillPopupImage(evt)
+      // fillPopupImage(evt)
+
+      const popupWithImage = new PopupWithImage(popupImage)
+      popupWithImage.open(evt)
       this._openPopup(popupImage)
     })
   }

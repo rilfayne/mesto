@@ -3,6 +3,7 @@ import Card from '../js/components/Card.js'
 import FormValidator from '../js/components/FormValidator.js'
 import Section from '../js/components/Section.js'
 import Popup from '../js/components/Popup.js'
+import PopupWithImage from '../js/components/PopupWithImage.js'
 import { initialCards } from '../js/utils/mocks.js'
 import { resetForm, formSubmitHandler, hideError, resetButton, handleCardClick } from '../js/utils/utils.js'
 import { popupInfo, popupImage, nameProfile, editButton, popupPlace, formInfo, addButton, closeButtonImage, closeButtonPlace, closeButtonInfo,
