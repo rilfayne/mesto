@@ -11,9 +11,6 @@ const editButton = document.querySelector('.profile__edit-button')
 const popupPlace = document.querySelector('.popup_place')
 const formInfo = document.querySelector('.popup__form_info')
 const addButton = document.querySelector('.profile__add-button')
-const closeButtonInfo = document.querySelector('.popup__close_info')
-const closeButtonPlace = document.querySelector('.popup__close_place')
-const closeButtonImage = document.querySelector('.popup__close_image')
 const formPlace = document.querySelector('.popup__form_place')
 const newPlaceNameInput = document.querySelector('.popup__input_place-name')
 const newPlaceLinkInput = document.querySelector('.popup__input_link')
@@ -29,5 +26,4 @@ const settingsObject = {
 }
 
 export { popupInfo, popupImage, imageInPopup, nameImageInPopup, nameProfile, descriptionProfile, nameInput, descriptionInput,
-  editButton, popupPlace, formInfo, addButton, closeButtonInfo, closeButtonPlace, closeButtonImage, formPlace, newPlaceLinkInput,
-  newPlaceNameInput, placeList, placeTemplate, settingsObject }
+  editButton, popupPlace, formInfo, addButton, formPlace, newPlaceLinkInput, newPlaceNameInput, placeList, placeTemplate, settingsObject }

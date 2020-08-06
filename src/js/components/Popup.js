@@ -6,12 +6,12 @@ export default class Popup {
   open() {
     this._popup.classList.add('popup_opened')
 
-    this._setEventListeners()
     document.addEventListener('keyup', (evt) => this._handleEscClose(evt))
   }
 
   close() {
     this._popup.classList.remove('popup_opened')
+    document.removeEventListener('keyup', (evt) => this._handleEscClose(evt))
   }
 
   // Закрытие попапа по клику на Esc
@@ -21,7 +21,7 @@ export default class Popup {
       }
   }
 
-  _setEventListeners() {
+  setEventListeners() {
     this._closeButton = this._popup.querySelector('.popup__close')
     // закрытие попапа по клику на крестик
     this._closeButton.addEventListener('mousedown', () => {

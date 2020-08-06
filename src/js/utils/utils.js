@@ -1,36 +1,7 @@
-import { popupInfo, imageInPopup, nameImageInPopup, nameProfile, descriptionProfile, nameInput, descriptionInput } from "./constants.js";
+import { popupInfo } from './constants.js'
 
 const handleCardClick = function (popup) {
   popup.classList.add('popup_opened')
-}
-
-// Заполнение попапа Image
-
-// const fillPopupImage = function(evt) {
-//   imageInPopup.src = ''
-//   imageInPopup.alt = ''
-//   nameImageInPopup.textContent = ''
-//
-//   imageInPopup.src = evt.target.src
-//   imageInPopup.alt = evt.target.alt
-//   nameImageInPopup.textContent = evt.target.alt
-// }
-
-// Функция очистки формы
-
-const resetForm = function(form) {
-  form.reset()
-}
-
-// Изменение данных профиля через попап Info
-
-const formSubmitHandler = function(evt) {
-  evt.preventDefault()
-
-  nameProfile.textContent = nameInput.value
-  descriptionProfile.textContent = descriptionInput.value
-
-  // togglePopup(popupInfo)
 }
 
 // Функция очистки ошибок при открытии попапа
@@ -62,5 +33,5 @@ const resetButton = (popup) => {
   }
 }
 
-export { resetForm, formSubmitHandler, hideError, resetButton, handleCardClick }
+export { hideError, resetButton, handleCardClick }
 

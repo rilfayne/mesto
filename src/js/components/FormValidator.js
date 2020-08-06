@@ -61,7 +61,6 @@ export default class FormValidator {
       // Отменим стандартное поведение формы
       evt.preventDefault()
     })
-
     this._setEventListeners()
   }
 
@@ -70,7 +69,7 @@ export default class FormValidator {
     // проходим по этому массиву методом some
     return inputList.some((inputElement) => {
       // Если поле не валидно, колбэк вернёт true
-      // Обход массива прекратится и вся фунцкция hasInvalidInput вернёт true
+      // Обход массива прекратится и вся функция hasInvalidInput вернёт true
       return !inputElement.validity.valid
     })
   }

@@ -1,6 +1,5 @@
-// import { fillPopupImage } from '../utils/utils.js'
 import { popupImage } from '../utils/constants.js'
-import PopupWithImage from "./PopupWithImage";
+import PopupWithImage from './PopupWithImage.js'
 
 export default class Card {
   constructor(place, template, openPopup) {
@@ -22,7 +21,7 @@ export default class Card {
     this._element = this._getTemplate()
     const placeImage = this._element.querySelector('.place__image')
     const placeName = this._element.querySelector('.place__name')
-    this._placeListeners();
+    this._placeListeners()
 
     // Добавим данные
     placeImage.src = this._link
@@ -48,10 +47,9 @@ export default class Card {
     this._element.querySelector('.place__button-delete').addEventListener('click', (evt) => { this._deleteCard(evt) })
     this._element.querySelector('.place__button-like').addEventListener('click', (evt) => { this._like(evt) })
     this._element.querySelector('.place__image').addEventListener('click', (evt) => {
-      // fillPopupImage(evt)
-
       const popupWithImage = new PopupWithImage(popupImage)
       popupWithImage.open(evt)
+
       this._openPopup(popupImage)
     })
   }
