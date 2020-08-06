@@ -3,10 +3,11 @@ import Card from '../js/components/Card.js'
 import FormValidator from '../js/components/FormValidator.js'
 import Section from '../js/components/Section.js'
 import PopupWithForm from '../js/components/PopupWithForm.js'
+import UserInfo from '../js/components/UserInfo.js'
 import { initialCards } from '../js/utils/mocks.js'
 import { hideError, resetButton, handleCardClick } from '../js/utils/utils.js'
 import { popupInfo, nameProfile, editButton, popupPlace, formInfo, addButton, formPlace, newPlaceNameInput, newPlaceLinkInput,
-  placeTemplate, placeList, settingsObject, descriptionProfile, descriptionInput, nameInput } from '../js/utils/constants.js'
+  placeTemplate, placeList, settingsObject, descriptionProfile } from '../js/utils/constants.js'
 
 const cardsList = new Section({
     items: initialCards,
@@ -24,6 +25,11 @@ const cardsList = new Section({
 // отрисовка карточек
 cardsList.renderItems()
 
+const user = new UserInfo({
+  name: nameProfile,
+  description: descriptionProfile
+})
+
 // создадим экземпляры класса Popup для каждого попапа
 const placePopup = new PopupWithForm(popupPlace, () => {
   // Создаем новый объект
@@ -40,8 +46,7 @@ const placePopup = new PopupWithForm(popupPlace, () => {
 })
 
 const infoPopup = new PopupWithForm(popupInfo, () => {
-  nameProfile.textContent = nameInput.value
-  descriptionProfile.textContent = descriptionInput.value
+  user.setUserInfo()
 })
 
 placePopup.setEventListeners()
@@ -50,8 +55,7 @@ infoPopup.setEventListeners()
 // Слушатели
 
 editButton.addEventListener('click', () => {
-  nameInput.value = nameProfile.textContent
-  descriptionInput.value = descriptionProfile.textContent
+  user.getUserInfo()
   infoPopup.open()
   hideError(formInfo)
   resetButton(popupInfo)
