@@ -28,6 +28,7 @@ https://rilfayne.github.io/mesto/
 - CSS (flex, grid, анимации);
 - JavaScript;
 - ООП
+- WebPack
 - методология БЭМ;
 - адаптивная вёрстка под размеры экранов от 320px до 1280px и больше;
 
