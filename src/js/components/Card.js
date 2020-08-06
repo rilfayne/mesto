@@ -49,6 +49,7 @@ export default class Card {
     this._element.querySelector('.place__image').addEventListener('click', (evt) => {
       const popupWithImage = new PopupWithImage(popupImage)
       popupWithImage.open(evt)
+      popupWithImage.setEventListeners()
 
       this._openPopup(popupImage)
     })
