@@ -1,5 +1,4 @@
 import Popup from './Popup.js'
-import { formPlace } from '../utils/constants.js'
 
 export default class PopupWithForm extends Popup {
   constructor(popup, submitHandler) {
@@ -9,17 +8,24 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-      this._submitHandler()
+    this._inputList = this._form.querySelectorAll('.popup__input')
+    this._formValues = {}
+
+    this._inputList.forEach(input => {
+      this._formValues[input.name] = input.value
+    })
+    return this._formValues
   }
 
   setEventListeners() {
     super.setEventListeners()
   // закрытие попапа при сабмите
     const submitButton = this._form.querySelector('.popup__button')
-    this._form.addEventListener('submit', () => {
+    this._form.addEventListener('submit', (evt) => {
       if (submitButton.classList.contains('popup__button_inactive')) { return false }
       else {
-        this._getInputValues()
+        evt.preventDefault()
+        this._submitHandler(this._getInputValues())
         this.close()
       }
     })
@@ -27,9 +33,7 @@ export default class PopupWithForm extends Popup {
 
   close() {
     super.close()
-  //при закрытии попапа форма должна ещё и сбрасываться
-    if (this._form === formPlace) {
-      this._form.reset()
-    }
+  //при закрытии попапа форма должна сбрасываться
+    this._form.reset()
   }
 }

@@ -12,8 +12,6 @@ const popupPlace = document.querySelector('.popup_place')
 const formInfo = document.querySelector('.popup__form_info')
 const addButton = document.querySelector('.profile__add-button')
 const formPlace = document.querySelector('.popup__form_place')
-const newPlaceNameInput = document.querySelector('.popup__input_place-name')
-const newPlaceLinkInput = document.querySelector('.popup__input_link')
 const placeTemplate = document.querySelector('.place-template').content
 const placeList = document.querySelector('.places__list')
 
@@ -23,7 +21,8 @@ const settingsObject = {
   inactiveButtonClass: 'popup__button_inactive',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active',
+  errorSelector: '.popup__input-error'
 }
 
 export { popupInfo, popupImage, imageInPopup, nameImageInPopup, nameProfile, descriptionProfile, nameInput, descriptionInput,
-  editButton, popupPlace, formInfo, addButton, formPlace, newPlaceLinkInput, newPlaceNameInput, placeList, placeTemplate, settingsObject }
+  editButton, popupPlace, formInfo, addButton, formPlace, placeList, placeTemplate, settingsObject }

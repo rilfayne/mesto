@@ -1,6 +1,3 @@
-import { popupImage } from '../utils/constants.js'
-import PopupWithImage from './PopupWithImage.js'
-
 export default class Card {
   constructor(place, template, openPopup) {
     this._name = place.name;
@@ -12,8 +9,7 @@ export default class Card {
   // Метод, который клонирует содержимое тега template
   _getTemplate() {
     // клонируем содержимое тега template
-    const placeElement = this._template.cloneNode(true)
-    return placeElement
+    return  this._template.cloneNode(true)
   }
 
   // Метод, который вставит данные в разметку и подготовит карточку к публикации.
@@ -21,7 +17,7 @@ export default class Card {
     this._element = this._getTemplate()
     const placeImage = this._element.querySelector('.place__image')
     const placeName = this._element.querySelector('.place__name')
-    this._placeListeners()
+    this._placeListeners(placeImage, placeName)
 
     // Добавим данные
     placeImage.src = this._link
@@ -43,15 +39,11 @@ export default class Card {
   }
 
   // Слушатели для карточек
-  _placeListeners() {
+  _placeListeners(placeImage, placeName) {
     this._element.querySelector('.place__button-delete').addEventListener('click', (evt) => { this._deleteCard(evt) })
     this._element.querySelector('.place__button-like').addEventListener('click', (evt) => { this._like(evt) })
-    this._element.querySelector('.place__image').addEventListener('click', (evt) => {
-      const popupWithImage = new PopupWithImage(popupImage)
-      popupWithImage.open(evt)
-      popupWithImage.setEventListeners()
-
-      this._openPopup(popupImage)
+    this._element.querySelector('.place__image').addEventListener('click', () => {
+      this._openPopup(placeImage, placeName)
     })
   }
 }

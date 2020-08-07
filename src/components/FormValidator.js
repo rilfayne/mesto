@@ -6,6 +6,7 @@ export default class FormValidator {
     this._inactiveButtonClass = settingsObject.inactiveButtonClass;
     this._inputErrorClass = settingsObject.inputErrorClass;
     this._errorClass = settingsObject.errorClass;
+    this._errorSelector = settingsObject.errorSelector;
   }
 
   // Метод, который добавляет класс с ошибкой
@@ -39,9 +40,9 @@ export default class FormValidator {
   _setEventListeners () {
     // Находим все поля внутри формы, и сделаем из них массив
     const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector))
-    const buttonElement = this._formElement.querySelector(this._submitButtonSelector)
+    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector)
     // Вызовем функцию, чтобы кнопка была неактивной до ввода данных
-    this._toggleButtonState(inputList, buttonElement)
+    this._toggleButtonState(inputList)
     // Обойдём все элементы полученной коллекции
     inputList.forEach((inputElement) => {
       // каждому полю добавим обработчик события input
@@ -49,7 +50,7 @@ export default class FormValidator {
         // Внутри колбэка вызовем isValid, чтобы проверять валидность поля
         this._isValid(inputElement)
         // Вызовем toggleButtonState, который отвечает за состояние кнопки
-        this._toggleButtonState(inputList, buttonElement)
+        this._toggleButtonState(inputList)
       })
     })
   }
@@ -74,15 +75,50 @@ export default class FormValidator {
     })
   }
 
-// Метод, который отключает и включает кнопку при вводе данных в форму
-  _toggleButtonState (inputList, buttonElement) {
+// Метод, который отключает и включает кнопку submit при вводе данных в форму
+  _toggleButtonState (inputList) {
     // Если есть хотя бы один невалидный инпут
     if (this._hasInvalidInput(inputList)) {
       // сделать кнопку неактивной
-      buttonElement.classList.add(this._inactiveButtonClass)
+      this._inactiveSubmit()
     } else {
       // иначе сделать кнопку активной
-      buttonElement.classList.remove(this._inactiveButtonClass)
+      this._activeSubmit()
     }
+  }
+
+  // Метод, который отвечает за состояние кнопки submit при открытии попапа
+  resetButton () {
+    if (this._buttonElement.classList.contains('popup__button_type_info')) {
+      this._activeSubmit()
+    }
+    else {
+      this._inactiveSubmit()
+    }
+  }
+
+  // Метод, который делает кнопку submit неактивной
+  _inactiveSubmit() {
+    this._buttonElement.classList.add(this._inactiveButtonClass)
+  }
+
+  // Метод, который делает кнопку submit активной
+  _activeSubmit() {
+    this._buttonElement.classList.remove(this._inactiveButtonClass)
+  }
+
+  // Метод, который очищает ошибки при открытии попапа
+  hideError () {
+    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector))
+    const errorElement = Array.from(this._formElement.querySelectorAll(this._errorSelector))
+
+    inputList.forEach(input => {
+      input.classList.remove(this._inputErrorClass)
+    })
+
+    errorElement.forEach(error => {
+      error.classList.remove(this._errorClass)
+      error.textContent = ''
+    })
   }
 }
