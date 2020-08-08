@@ -9,11 +9,11 @@ import { initialCards } from '../utils/mocks.js'
 import { popupInfo, nameProfile, editButton, popupPlace, formInfo, addButton, formPlace, placeTemplate, placeList, settingsObject,
   descriptionProfile, popupImage, imageInPopup, nameImageInPopup, nameInput, descriptionInput } from '../utils/constants.js'
 
+const popupWithImage = new PopupWithImage(popupImage, imageInPopup, nameImageInPopup)
+
 const handleCardClick = function (placeImage, placeName) {
-  const popupWithImage = new PopupWithImage(popupImage, imageInPopup, nameImageInPopup)
   popupWithImage.open(placeImage, placeName)
   popupWithImage.setEventListeners()
-  popupImage.classList.add('popup_opened')
 }
 
 const cardsList = new Section({
