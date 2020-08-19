@@ -4,24 +4,13 @@ export default class Api {
     this.headers = headers;
   }
 
-  // getInitialCards() {
-  //   return fetch(`${this.url}cards`, {
-  //     headers: {
-  //       authorization: this.headers.authorization
-  //     }
-  //   })
-  //     .then(res => {
-  //       if (res.ok) {
-  //         return res.json()
-  //       }
-  //
-  //       // если ошибка, отклоняем промис
-  //       return Promise.reject(`Ошибка: ${res.status}`)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err) // выведем ошибку в консоль
-  //     })
-  // }
+  getInitialCards() {
+    return fetch(`${this.url}/cards`, {
+      headers: {
+        authorization: this.headers.authorization
+      }
+    })
+  }
 
   getUserInfo() {
     return fetch(`${this.url}/users/me`, {
@@ -31,5 +20,15 @@ export default class Api {
     })
   }
 
+  patchUserInfo(nameValue, aboutValue) {
+    return fetch(`${this.url}/users/me`, {
+      method: 'PATCH',
+      headers: this.headers,
+      body: JSON.stringify({
+        name: nameValue.value,
+        about: aboutValue.value
+      })
+    })
+  }
 
 }
