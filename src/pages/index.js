@@ -5,9 +5,39 @@ import Section from '../components/Section.js'
 import PopupWithForm from '../components/PopupWithForm.js'
 import PopupWithImage from '../components/PopupWithImage.js'
 import UserInfo from '../components/UserInfo.js'
+import Api from '../components/Api.js'
 import { initialCards } from '../utils/mocks.js'
 import { popupInfo, nameProfile, editButton, popupPlace, formInfo, addButton, formPlace, placeTemplate, placeList, settingsObject,
   descriptionProfile, popupImage, imageInPopup, nameImageInPopup, nameInput, descriptionInput } from '../utils/constants.js'
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
+  headers: {
+    authorization: 'a443eb38-3b02-4168-b5e2-cad025c42c56',
+    'Content-Type': 'application/json'
+  }
+})
+
+
+function loadData() {
+  api.getUserInfo()
+    .then(res => {
+      if (res.ok) {
+        return res.json()
+      }
+      return Promise.reject(`Ошибка ${res.status}`)
+    })
+    .then((data) => {
+      console.log(data)
+      nameProfile.textContent = data.name
+      descriptionProfile.textContent = data.about
+      document.querySelector('.profile__avatar').src = data.avatar
+    })
+    .catch((err) => {
+      console.log(err) // выведем ошибку в консоль
+    })
+}
+
 
 const popupWithImage = new PopupWithImage(popupImage, imageInPopup, nameImageInPopup)
 
@@ -78,3 +108,5 @@ const infoFormValidator = new FormValidator(settingsObject, formInfo)
 
 placeFormValidator.enableValidation()
 infoFormValidator.enableValidation()
+
+loadData()
