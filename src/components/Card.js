@@ -2,6 +2,7 @@ export default class Card {
   constructor(place, template, openPopup) {
     this._name = place.name;
     this._link = place.link;
+    this._likes = place.likes;
     this._template = template;
     this._openPopup = openPopup;
   }
@@ -17,12 +18,16 @@ export default class Card {
     this._element = this._getTemplate()
     const placeImage = this._element.querySelector('.place__image')
     const placeName = this._element.querySelector('.place__name')
+    const placeLikes = this._element.querySelector('.place__likes')
     this._placeListeners(placeImage, placeName)
 
     // Добавим данные
     placeImage.src = this._link
     placeImage.alt = this._name
     placeName.textContent = this._name
+    if (this._likes.length>=1) {
+      placeLikes.textContent = this._likes.length
+    }
 
     // Вернём элемент наружу
     return this._element

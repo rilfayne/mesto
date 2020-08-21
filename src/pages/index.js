@@ -86,10 +86,6 @@ const renderCards = function (cards) {
   return cardsList
 }
 
-// renderCards()
-
-
-
 const user = new UserInfo({
   name: nameProfile,
   description: descriptionProfile
@@ -97,19 +93,8 @@ const user = new UserInfo({
 
 // создадим экземпляры класса Popup для каждого попапа
 const placePopup = new PopupWithForm(popupPlace, (place) => {
-  addNewCard(place)
-}
-
-  // (place) => {
-  //
-  // // Создаем экземпляр класса Card
-  // const newPlaceCard = new Card (place, placeTemplate, handleCardClick)
-  // const placeElement = newPlaceCard.generateCard()
-  //
-  //
-  // cardsList.addItem(placeElement)
-// }
-)
+    addNewCard(place)
+  })
 
 const infoPopup = new PopupWithForm(popupInfo, handleUserInfo)
 

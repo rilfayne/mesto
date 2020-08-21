@@ -66,4 +66,11 @@ export default class Api {
       })
   }
 
+  // putlike(cardId) {
+  //   const cardId = this.cardsArray[cardIndex]._id
+  //   return fetch(`${this.url}/cards/like/${cardId}`, {
+  //
+  //   })
+  // }
+
 }
