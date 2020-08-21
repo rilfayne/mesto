@@ -11,7 +11,11 @@ export default class Section {
     this._renderedItems.forEach(place => this._renderer(place))
   }
 
-  addItem(element) {
-    this._container.prepend(element)
+  addItem(card) {
+    this._container.append(card)
+  }
+
+  addNewCard(card) {
+    this._container.prepend(card)
   }
 }

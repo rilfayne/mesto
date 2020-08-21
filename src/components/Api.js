@@ -10,6 +10,12 @@ export default class Api {
         authorization: this.headers.authorization
       }
     })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка ${res.status}`)
+      })
   }
 
   getUserInfo() {
@@ -18,17 +24,46 @@ export default class Api {
         authorization: this.headers.authorization
       }
     })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка ${res.status}`)
+      })
   }
 
-  patchUserInfo(nameValue, aboutValue) {
+  patchUserInfo(name, about) {
     return fetch(`${this.url}/users/me`, {
       method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify({
-        name: nameValue.value,
-        about: aboutValue.value
+        name: name,
+        about: about
       })
     })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка ${res.status}`)
+      })
+  }
+
+  postNewCard(name, link) {
+    return fetch(`${this.url}/cards`, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        name: name,
+        link: link
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка ${res.status}`)
+      })
   }
 
 }
