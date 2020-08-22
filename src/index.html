@@ -72,6 +72,13 @@
               </figure>
             </div>
           </section>
+          <section class="popup popup_delete-card">
+            <div class="popup__container">
+              <button class="popup__close transition" type="button" aria-label="Закрыть"></button>
+              <h2 class="popup__title">Вы уверены?</h2>
+              <button class="popup__button popup__button_type_delete" type="button">Да</button>
+            </div>
+          </section>
         </main>
         <footer class="footer indent">
           <p class="footer__copyright">&copy; 2020. Оля Сальникова</p>
@@ -81,7 +88,6 @@
     <template class="place-template">
       <li class="place">
         <img class="place__image">
-        <button class="place__button-delete transition" type="button" aria-label="Удалить"></button>
         <div class="place__description">
           <h2 class="place__name"></h2>
           <div class="place__likes-container">

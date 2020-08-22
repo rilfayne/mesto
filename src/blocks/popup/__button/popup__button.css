@@ -11,6 +11,7 @@
   box-shadow: none;
   cursor: pointer;
   transition: background-color .3s linear;
+  width: 100%;
 }
 
 .popup__button:hover {

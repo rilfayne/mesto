@@ -2,12 +2,13 @@ import './index.css'
 import Card from '../components/Card.js'
 import FormValidator from '../components/FormValidator.js'
 import Section from '../components/Section.js'
+import PopupForDeleteCard from '../components/PopupForDeleteCard.js'
 import PopupWithForm from '../components/PopupWithForm.js'
 import PopupWithImage from '../components/PopupWithImage.js'
 import UserInfo from '../components/UserInfo.js'
 import Api from '../components/Api.js'
 import { popupInfo, nameProfile, editButton, popupPlace, formInfo, addButton, formPlace, placeTemplate, placeList,
-  settingsObject,
+  settingsObject, popupDel,
   descriptionProfile, popupImage, imageInPopup, nameImageInPopup, nameInput, descriptionInput } from '../utils/constants.js'
 
 const api = new Api({
@@ -21,6 +22,7 @@ const api = new Api({
 // Загрузка данных пользователя с сервера
 api.getUserInfo()
   .then((data) => {
+    api.userInfo = data
     nameProfile.textContent = data.name
     descriptionProfile.textContent = data.about
     document.querySelector('.profile__avatar').src = data.avatar
@@ -53,7 +55,7 @@ const handleUserInfo = function (userData) {
 const addNewCard = function (card) {
   api.postNewCard(card.name, card.link)
     .then((card) => {
-      const newPlaceCard = new Card (card, placeTemplate, handleCardClick)
+      const newPlaceCard = new Card (card, placeTemplate, handleCardClick, api.userInfo._id, handleDelClick, api)
       const placeElement = newPlaceCard.generateCard()
       renderCards().addNewCard(placeElement)
     })
@@ -69,13 +71,22 @@ const handleCardClick = function (placeImage, placeName) {
   popupWithImage.setEventListeners()
 }
 
+// Удаление карточки
+
+const popupDelCard = new PopupForDeleteCard(popupDel, api)
+
+const handleDelClick = function (cardId) {
+  popupDelCard.open()
+  popupDelCard.setEventListeners(cardId)
+}
+
 // Отрисовка карточек
 const renderCards = function (cards) {
   const cardsList = new Section({
       items: cards,
       renderer: (place) => {
 
-        const newPlaceCard = new Card (place, placeTemplate, handleCardClick)
+        const newPlaceCard = new Card (place, placeTemplate, handleCardClick, api.userInfo._id, handleDelClick)
         const placeElement = newPlaceCard.generateCard()
 
         cardsList.addItem(placeElement)

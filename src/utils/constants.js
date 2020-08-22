@@ -1,5 +1,6 @@
 const popupInfo = document.querySelector('.popup_info')
 const popupImage = document.querySelector('.popup_image')
+const popupDel = document.querySelector('.popup_delete-card')
 const imageInPopup = document.querySelector('.popup__image')
 const nameImageInPopup = document.querySelector('.popup__image-name')
 const nameProfile = document.querySelector('.profile__name')
@@ -25,4 +26,4 @@ const settingsObject = {
 }
 
 export { popupInfo, popupImage, imageInPopup, nameImageInPopup, nameProfile, descriptionProfile, nameInput, descriptionInput,
-  editButton, popupPlace, formInfo, addButton, formPlace, placeList, placeTemplate, settingsObject }
+  editButton, popupPlace, formInfo, addButton, formPlace, placeList, placeTemplate, settingsObject, popupDel }
