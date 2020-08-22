@@ -8,7 +8,7 @@ import PopupWithImage from '../components/PopupWithImage.js'
 import UserInfo from '../components/UserInfo.js'
 import Api from '../components/Api.js'
 import { popupInfo, nameProfile, editButton, popupPlace, formInfo, addButton, formPlace, placeTemplate, placeList,
-  settingsObject, popupDel,
+  settingsObject, popupDel, editAvatarButton, popupAvatar, formAvatar,
   descriptionProfile, popupImage, imageInPopup, nameImageInPopup, nameInput, descriptionInput } from '../utils/constants.js'
 
 const api = new Api({
@@ -25,7 +25,7 @@ api.getUserInfo()
     api.userInfo = data
     nameProfile.textContent = data.name
     descriptionProfile.textContent = data.about
-    document.querySelector('.profile__avatar').src = data.avatar
+    document.querySelector('.profile__avatar').style.backgroundImage = 'url('+data.avatar+')'
   })
   .catch((err) => {
     console.log(err) // выведем ошибку в консоль
@@ -45,6 +45,17 @@ const handleUserInfo = function (userData) {
   api.patchUserInfo(userData.name, userData.about)
     .then((info) => {
       user.setUserInfo(info)
+    })
+    .catch((err) => {
+      console.log(err) // выведем ошибку в консоль
+    })
+}
+
+// Изменение аватарки
+const handleAvatar = function (link) {
+  api.patchAvatar(link.avatar)
+    .then((res) => {
+      document.querySelector('.profile__avatar').style.backgroundImage = 'url('+res.avatar+')'
     })
     .catch((err) => {
       console.log(err) // выведем ошибку в консоль
@@ -109,8 +120,12 @@ const placePopup = new PopupWithForm(popupPlace, (place) => {
 
 const infoPopup = new PopupWithForm(popupInfo, handleUserInfo)
 
+const avatarPopup = new PopupWithForm(popupAvatar, handleAvatar)
+
 placePopup.setEventListeners()
 infoPopup.setEventListeners()
+avatarPopup.setEventListeners()
+
 
 // Слушатели
 
@@ -127,11 +142,18 @@ addButton.addEventListener('click', () => {
   placeFormValidator.hideError()
   placeFormValidator.resetButton()
 })
+editAvatarButton.addEventListener('click', () =>{
+  avatarPopup.open()
+  avatarFormValidator.hideError()
+  avatarFormValidator.resetButton()
+})
 
 // Создадим два экземпляра класса FormValidator для двух форм
 
 const placeFormValidator = new FormValidator (settingsObject, formPlace)
 const infoFormValidator = new FormValidator(settingsObject, formInfo)
+const avatarFormValidator = new FormValidator(settingsObject, formAvatar)
 
 placeFormValidator.enableValidation()
 infoFormValidator.enableValidation()
+avatarFormValidator.enableValidation()

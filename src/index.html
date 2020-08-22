@@ -14,7 +14,7 @@
         <main>
           <section class="profile indent">
             <div class="profile__user">
-              <img class="profile__avatar" alt="Аватар">
+              <div class="profile__avatar transition" alt="Аватар"><button class="profile__edit-avatar-button"></button></div>
               <div class="profile__info">
                 <div class="profile__container">
                   <h1 class="profile__name"></h1>
@@ -77,6 +77,19 @@
               <button class="popup__close transition" type="button" aria-label="Закрыть"></button>
               <h2 class="popup__title">Вы уверены?</h2>
               <button class="popup__button popup__button_type_delete" type="button">Да</button>
+            </div>
+          </section>
+          <section class="popup popup_avatar">
+            <div class="popup__container">
+              <button class="popup__close transition" type="button" aria-label="Закрыть"></button>
+              <h2 class="popup__title">Обновить аватар</h2>
+              <form class="popup__form popup__form_avatar" name="avatar" method="get" action="#" novalidate>
+                <label class="popup__form-field">
+                  <input class="popup__input popup__input_avatar" id="avatar-link-input" type="url" name="avatar" placeholder="Ссылка на аватар" required>
+                  <span class="popup__input-error" id="avatar-link-input-error"></span>
+                </label>
+                <button class="popup__button popup__button_type_avatar" type="submit">Сохранить</button>
+              </form>
             </div>
           </section>
         </main>
