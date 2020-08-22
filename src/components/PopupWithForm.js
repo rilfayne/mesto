@@ -24,9 +24,16 @@ export default class PopupWithForm extends Popup {
     this._form.addEventListener('submit', (evt) => {
       if (submitButton.classList.contains('popup__button_inactive')) { return false }
       else {
+        submitButton.textContent = 'Сохранение...'
         evt.preventDefault()
         this._submitHandler(this._getInputValues())
         this.close()
+        if(submitButton.classList.contains('popup__button_type_place')) {
+          submitButton.textContent = 'Создать'
+        }
+        else  {
+          submitButton.textContent = 'Сохранить'
+        }
       }
     })
   }
