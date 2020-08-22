@@ -66,12 +66,35 @@ export default class Api {
       })
   }
 
-  // putlike(cardId) {
-  //   const cardId = this.cardsArray[cardIndex]._id
-  //   return fetch(`${this.url}/cards/like/${cardId}`, {
-  //
-  //   })
-  // }
+  putlike(cardId) {
+    return fetch(`${this.url}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: {
+        authorization: this.headers.authorization
+      }
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка ${res.status}`)
+      })
+  }
+
+  delLike(cardId) {
+    return fetch(`${this.url}/cards/likes/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this.headers.authorization
+      }
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка ${res.status}`)
+      })
+  }
 
   delCard(cardId) {
     return fetch(`${this.url}/cards/${cardId}`, {

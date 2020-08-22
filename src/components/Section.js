@@ -11,7 +11,14 @@ export default class Section {
     this._renderedItems.forEach(place => this._renderer(place))
   }
 
-  addItem(card) {
+  addItem(card, placeObject, myId) {
+    placeObject.likes.forEach((like) => {
+      if(like._id === myId) {
+        const likeButton = card.querySelector('.place__button-like')
+          likeButton.classList.add('place__button-like_active')
+      }
+    })
+
     this._container.append(card)
   }
 

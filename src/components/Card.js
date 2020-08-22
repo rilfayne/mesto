@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(place, template, openPopupWithImage, myId, openPopupDelCard) {
+  constructor(place, template, openPopupWithImage, myId, openPopupDelCard, api) {
     this._name = place.name;
     this._link = place.link;
     this._id = place._id;
@@ -9,6 +9,7 @@ export default class Card {
     this._template = template;
     this._openPopupWithImage = openPopupWithImage;
     this._openPopupDelCard = openPopupDelCard;
+    this._api = api;
   }
 
   // Метод, который клонирует содержимое тега template
@@ -22,7 +23,7 @@ export default class Card {
     this._element = this._getTemplate()
     const placeImage = this._element.querySelector('.place__image')
     const placeName = this._element.querySelector('.place__name')
-    const placeLikes = this._element.querySelector('.place__likes')
+    this._placeLikes = this._element.querySelector('.place__likes')
     const place = this._element.querySelector('.place')
 
     // Добавим данные
@@ -32,7 +33,7 @@ export default class Card {
     place.id = this._id
 
     if (this._likes.length>=1) {
-      placeLikes.textContent = this._likes.length
+      this._placeLikes.textContent = this._likes.length
     }
 
     // если id автора карточки = id владельца страницы, то добавить карточке кнопку удаления и навесить на нее листенер
@@ -49,6 +50,7 @@ export default class Card {
       })
     }
 
+    // добавим остальные листенеры
     this._placeListeners(placeImage, placeName)
     // Вернём элемент наружу
     return this._element
@@ -56,7 +58,42 @@ export default class Card {
 
   // Лайки
    _like(evt) {
-    evt.target.classList.toggle('place__button-like_active')
+    // если лайк был проставлен
+    if(evt.target.classList.contains('place__button-like_active')) {
+      // убрать лайк
+      this._api.delLike(this._id)
+        .then(res => {
+          // убрать с сердечка класс, который делает его закрашенным
+          evt.target.classList.remove('place__button-like_active')
+
+          // и, если количество лайков больше 0
+          if (res.likes.length>=1) {
+            //вывести количество лайков под иконкой сердечка
+            this._placeLikes.textContent = res.likes.length
+          }
+          else {
+            // если количество лайков равно 0, то убрать цифру 0 под иконкой сердечка
+            this._placeLikes.textContent = ""
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+    else {
+      // поставить лайк
+      this._api.putlike(this._id)
+        .then(res => {
+          // добавить сердечку класс, который делает его закрашенным
+          evt.target.classList.add('place__button-like_active')
+          // обновить цифру (количество лайков) под иконкой сердечка
+          this._placeLikes.textContent = res.likes.length
+
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   }
 
   // Слушатели для карточек

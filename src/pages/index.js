@@ -86,10 +86,10 @@ const renderCards = function (cards) {
       items: cards,
       renderer: (place) => {
 
-        const newPlaceCard = new Card (place, placeTemplate, handleCardClick, api.userInfo._id, handleDelClick)
+        const newPlaceCard = new Card (place, placeTemplate, handleCardClick, api.userInfo._id, handleDelClick, api)
         const placeElement = newPlaceCard.generateCard()
 
-        cardsList.addItem(placeElement)
+        cardsList.addItem(placeElement, place, api.userInfo._id)
       },
     },
     placeList
