@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(place, template, openPopupWithImage, myId, openPopupDelCard, api) {
+  constructor(place, template, openPopupWithImage, myId, openPopupDeleteCard, api) {
     this._name = place.name;
     this._link = place.link;
     this._id = place._id;
@@ -8,7 +8,7 @@ export default class Card {
     this._myId = myId;
     this._template = template;
     this._openPopupWithImage = openPopupWithImage;
-    this._openPopupDelCard = openPopupDelCard;
+    this._openPopupDeleteCard = openPopupDeleteCard;
     this._api = api;
   }
 
@@ -38,17 +38,25 @@ export default class Card {
 
     // если id автора карточки = id владельца страницы, то добавить карточке кнопку удаления и навесить на нее листенер
     if (this._owner._id === this._myId) {
-      const cardDelButton = document.createElement('button')
-      cardDelButton.classList.add('place__button-delete', 'transition')
-      cardDelButton.setAttribute('type', 'button')
-      cardDelButton.setAttribute('aria-label', 'Удалить')
-      this._element.querySelector('.place').appendChild(cardDelButton)
+      const cardDeleteButton = document.createElement('button')
+      cardDeleteButton.classList.add('place__button-delete', 'transition')
+      cardDeleteButton.setAttribute('type', 'button')
+      cardDeleteButton.setAttribute('aria-label', 'Удалить')
+      this._element.querySelector('.place').appendChild(cardDeleteButton)
 
       // добавим листенер для открытия попапа по клику на иконку удаления
-      cardDelButton.addEventListener('click', () => {
-        this._openPopupDelCard(this._id)
+      cardDeleteButton.addEventListener('click', () => {
+        this._openPopupDeleteCard(this._id)
       })
     }
+
+    // переберём список лайков элемента, и если есть лайк владельца страницы, закрасим сердечко
+    this._likes.forEach((like) => {
+      if(like._id === this._myId) {
+        const likeButton = this._element.querySelector('.place__button-like')
+        likeButton.classList.add('place__button-like_active')
+      }
+    })
 
     // добавим остальные листенеры
     this._placeListeners(placeImage, placeName)
@@ -61,7 +69,7 @@ export default class Card {
     // если лайк был проставлен
     if(evt.target.classList.contains('place__button-like_active')) {
       // убрать лайк
-      this._api.delLike(this._id)
+      this._api.deleteLike(this._id)
         .then(res => {
           // убрать с сердечка класс, который делает его закрашенным
           evt.target.classList.remove('place__button-like_active')

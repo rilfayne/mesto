@@ -18,4 +18,8 @@ export default class UserInfo {
     this._name.textContent = name
     this._description.textContent = about
   }
+
+  setAvatar(avatar) {
+    document.querySelector('.profile__avatar').style.backgroundImage = 'url('+avatar+')'
+  }
 }

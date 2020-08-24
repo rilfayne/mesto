@@ -7,8 +7,9 @@ import PopupWithForm from '../components/PopupWithForm.js'
 import PopupWithImage from '../components/PopupWithImage.js'
 import UserInfo from '../components/UserInfo.js'
 import Api from '../components/Api.js'
+import { setLoading } from '../utils/utils.js'
 import { popupInfo, nameProfile, editButton, popupPlace, formInfo, addButton, formPlace, placeTemplate, placeList,
-  settingsObject, popupDel, editAvatarButton, popupAvatar, formAvatar,
+  settingsObject, popupDel, editAvatarButton, popupAvatar, formAvatar, submitButtonPlace, submitButtonInfo, submitButtonAvatar,
   descriptionProfile, popupImage, imageInPopup, nameImageInPopup, nameInput, descriptionInput } from '../utils/constants.js'
 
 const api = new Api({
@@ -23,18 +24,16 @@ const api = new Api({
 api.getUserInfo()
   .then((data) => {
     api.userInfo = data
-    nameProfile.textContent = data.name
-    descriptionProfile.textContent = data.about
-    document.querySelector('.profile__avatar').style.backgroundImage = 'url('+data.avatar+')'
-  })
-  .catch((err) => {
-    console.log(err) // выведем ошибку в консоль
-  })
-
-// Загрузка карточек с сервера
-api.getInitialCards()
-  .then((cards) => {
-    renderCards(cards).renderItems()
+    user.setUserInfo({ name: data.name, about: data.about })
+    user.setAvatar(data.avatar)
+    // Загрузка карточек с сервера
+    api.getInitialCards()
+      .then((cards) => {
+        renderCards(cards).renderItems()
+      })
+      .catch((err) => {
+        console.log(err) // выведем ошибку в консоль
+      })
   })
   .catch((err) => {
     console.log(err) // выведем ошибку в консоль
@@ -42,36 +41,49 @@ api.getInitialCards()
 
 // Изменение данных о пользователе
 const handleUserInfo = function (userData) {
+  setLoading(true, submitButtonInfo)
   api.patchUserInfo(userData.name, userData.about)
     .then((info) => {
       user.setUserInfo(info)
+      infoPopup.close()
     })
     .catch((err) => {
       console.log(err) // выведем ошибку в консоль
+    })
+    .finally(() => {
+      setLoading(false, submitButtonInfo)
     })
 }
 
 // Изменение аватарки
-const handleAvatar = function (link) {
-  api.patchAvatar(link.avatar)
+const handleAvatar = function (linkObject) {
+  setLoading(true, submitButtonAvatar)
+  api.patchAvatar(linkObject.avatar)
     .then((res) => {
-      document.querySelector('.profile__avatar').style.backgroundImage = 'url('+res.avatar+')'
+      user.setAvatar(res.avatar)
+      avatarPopup.close()
     })
     .catch((err) => {
       console.log(err) // выведем ошибку в консоль
+    })
+    .finally(() => {
+      setLoading(false, submitButtonAvatar)
     })
 }
 
 // Добавление новой карточки на сервер
 const addNewCard = function (card) {
+  setLoading(true, submitButtonPlace)
   api.postNewCard(card.name, card.link)
     .then((card) => {
-      const newPlaceCard = new Card (card, placeTemplate, handleCardClick, api.userInfo._id, handleDelClick, api)
-      const placeElement = newPlaceCard.generateCard()
-      renderCards().addNewCard(placeElement)
+      renderCards().addNewCard(createPlaceCard(card))
+      placePopup.close()
     })
     .catch((err) => {
       console.log(err) // выведем ошибку в консоль
+    })
+    .finally(() => {
+      setLoading(false, submitButtonPlace)
     })
 }
 
@@ -86,9 +98,16 @@ const handleCardClick = function (placeImage, placeName) {
 
 const popupDelCard = new PopupForDeleteCard(popupDel, api)
 
-const handleDelClick = function (cardId) {
+const handleDeleteClick = function (cardId) {
   popupDelCard.open()
   popupDelCard.setEventListeners(cardId)
+}
+
+// создание карточки
+
+const createPlaceCard = function (place) {
+  const newPlaceCard = new Card (place, placeTemplate, handleCardClick, api.userInfo._id, handleDeleteClick, api)
+  return newPlaceCard.generateCard()
 }
 
 // Отрисовка карточек
@@ -96,11 +115,7 @@ const renderCards = function (cards) {
   const cardsList = new Section({
       items: cards,
       renderer: (place) => {
-
-        const newPlaceCard = new Card (place, placeTemplate, handleCardClick, api.userInfo._id, handleDelClick, api)
-        const placeElement = newPlaceCard.generateCard()
-
-        cardsList.addItem(placeElement, place, api.userInfo._id)
+        cardsList.addItem(createPlaceCard(place))
       },
     },
     placeList

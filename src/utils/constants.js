@@ -18,6 +18,9 @@ const formPlace = document.querySelector('.popup__form_place')
 const formAvatar = document.querySelector('.popup__form_avatar')
 const placeTemplate = document.querySelector('.place-template').content
 const placeList = document.querySelector('.places__list')
+const submitButtonPlace = document.querySelector('.popup__button_type_place')
+const submitButtonInfo = document.querySelector('.popup__button_type_info')
+const submitButtonAvatar = document.querySelector('.popup__button_type_avatar')
 
 const settingsObject = {
   inputSelector: '.popup__input',
@@ -30,4 +33,4 @@ const settingsObject = {
 
 export { popupInfo, popupImage, imageInPopup, nameImageInPopup, nameProfile, descriptionProfile, nameInput, descriptionInput,
   editButton, popupPlace, formInfo, addButton, formPlace, placeList, placeTemplate, settingsObject, popupDel, editAvatarButton,
-  popupAvatar, formAvatar }
+  popupAvatar, formAvatar, submitButtonAvatar, submitButtonInfo, submitButtonPlace }

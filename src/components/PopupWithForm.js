@@ -20,20 +20,12 @@ export default class PopupWithForm extends Popup {
   setEventListeners() {
     super.setEventListeners()
   // закрытие попапа при сабмите
-    const submitButton = this._form.querySelector('.popup__button')
+    this.submitButton = this._form.querySelector('.popup__button')
     this._form.addEventListener('submit', (evt) => {
-      if (submitButton.classList.contains('popup__button_inactive')) { return false }
+      if (this.submitButton.classList.contains('popup__button_inactive')) { return false }
       else {
-        submitButton.textContent = 'Сохранение...'
         evt.preventDefault()
         this._submitHandler(this._getInputValues())
-        this.close()
-        if(submitButton.classList.contains('popup__button_type_place')) {
-          submitButton.textContent = 'Создать'
-        }
-        else  {
-          submitButton.textContent = 'Сохранить'
-        }
       }
     })
   }
